@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-12T02:29:00.505Z</updated>
+    <updated>2022-02-12T02:31:03.836Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -36,7 +36,9 @@ system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\
 <h3 id="3">3</h3>
 <figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644631386131.jpg" alt="" loading="lazy"></figure>
 <h3 id="4-tips-for-blue-team">4 Tips for blue team</h3>
-<p>Keep an eye on AeDebug</p>
+<p>Keep an eye on<br>
+\HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
+\HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\AeDebug</p>
 ]]></content>
     </entry>
 </feed>
