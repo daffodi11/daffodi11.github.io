@@ -102,6 +102,12 @@ system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\
       </div>
 
       
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
 
       
 
@@ -292,6 +298,28 @@ system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\
     initImg();
   </script>
   
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script type="application/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script type="application/javascript">
+
+  var gitalk = new Gitalk({
+    clientID: '14567eb76fbd8517a142',
+    clientSecret: '0554531da4bcec4ecfed7c23af678bb541868c75',
+    repo: 'daffodi11.github.io',
+    owner: 'daffodi11',
+    admin: ['daffodi11'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+    
   
 </body>
 
