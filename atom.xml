@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-13T14:33:24.330Z</updated>
+    <updated>2022-02-13T14:41:46.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -152,7 +152,7 @@ flag{9ca871b668f2-b668-097c-cbm8-9op404c891e2}</p>
         <id>https://daffodi11.github.io/post/break-process-tree-by-configuring-automatic-debugging-for-application-crashes/</id>
         <link href="https://daffodi11.github.io/post/break-process-tree-by-configuring-automatic-debugging-for-application-crashes/">
         </link>
-        <updated>2022-02-12T00:49:53.000Z</updated>
+        <updated>2022-02-13T03:49:53.000Z</updated>
         <content type="html"><![CDATA[<h3 id="1-configure-automatic-debugging">1 Configure automatic debugging</h3>
 <p>在x86计算机上,后期调试设置存储在\HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
 有两个注册表项用于后期调试:<br>
@@ -164,11 +164,11 @@ Debugger<br>
 Auto<br>
 此REG_SZ值始终为0或1。如果Auto设置为0,则在后期调试之前将显示一个消息框。</p>
 <h3 id="2-code">2 Code</h3>
-<pre><code>//HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
-system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Auto /t REG_SZ /d 1 /f&quot;);
-system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Debugger /t REG_SZ /d \&quot;notepad.exe\&quot; /f&quot;);
-//Crashing the application
-*((int*)NULL) = 0;
+<pre><code class="language-c">	//HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Auto /t REG_SZ /d 1 /f&quot;);
+	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Debugger /t REG_SZ /d \&quot;notepad.exe\&quot; /f&quot;);
+	//Crashing the application
+	*((int*)NULL) = 0;
 </code></pre>
 <h3 id="3">3</h3>
 <figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644631386131.jpg" alt="" loading="lazy"></figure>
