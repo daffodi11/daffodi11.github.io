@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-14T01:10:41.948Z</updated>
+    <updated>2022-02-14T05:50:26.935Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://daffodi11.github.io/images/avatar.png</logo>
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[ 某知名语音PC客户端RCE漏洞]]></title>
+        <id>https://daffodi11.github.io/post/mou-zhi-ming-yu-yin-pc-ke-hu-duan-rce-lou-dong/</id>
+        <link href="https://daffodi11.github.io/post/mou-zhi-ming-yu-yin-pc-ke-hu-duan-rce-lou-dong/">
+        </link>
+        <updated>2022-02-14T05:40:38.000Z</updated>
+        <content type="html"><![CDATA[<p>pc客户端是electron框架的<br>
+房间公告存在存储XSS<br>
+<img src="https://daffodi11.github.io/post-images/1644817802630.jpg" alt="" loading="lazy"><br>
+于是乎<br>
+<img src="https://daffodi11.github.io/post-images/1644817806860.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1644817811683.jpg" alt="" loading="lazy"><br>
+任何人只要进入房间 即执行任意命令</p>
+<p>第一时间联系厂商 无人处理后提交某天平台<br>
+<img src="https://daffodi11.github.io/post-images/1644817816257.jpg" alt="" loading="lazy"></p>
+<p>2021-01-15 11:16:27-报告相关厂商与平台<br>
+2022-02-14 13:47:27-测试已修复后披露</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Break process tree by configuring automatic debugging]]></title>
         <id>https://daffodi11.github.io/post/break-process-tree-by-configuring-automatic-debugging-for-application-crashes/</id>
