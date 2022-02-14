@@ -59,7 +59,7 @@
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2022-02-13 · 2 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2022-02-14 · 2 min read</div>
           
             <a href="https://daffodi11.github.io/tag/rt7PpEPh7/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
               <i class="ri-hashtag"></i>
@@ -79,7 +79,7 @@ Debugger<br>
 Auto<br>
 此REG_SZ值始终为0或1。如果Auto设置为0,则在后期调试之前将显示一个消息框。</p>
 <h3 id="2-code">2 Code</h3>
-<pre><code class="language-c">	//HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
+<pre><code class="language-cpp">	//HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
 	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Auto /t REG_SZ /d 1 /f&quot;);
 	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Debugger /t REG_SZ /d \&quot;notepad.exe\&quot; /f&quot;);
 	//Crashing the application
