@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-14T12:13:02.906Z</updated>
+    <updated>2022-02-14T14:42:29.357Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -10,6 +10,60 @@
     <logo>https://daffodi11.github.io/images/avatar.png</logo>
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[红队武器研发：尝试实现一个现代C2框架-DaffodilC2]]></title>
+        <id>https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/</id>
+        <link href="https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/">
+        </link>
+        <updated>2022-02-14T12:23:20.000Z</updated>
+        <content type="html"><![CDATA[<p>本系列将尝试开发一个现代化的C2框架<br>
+由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。</p>
+<h2 id="浅谈c2框架的发展历史">浅谈C2框架的发展历史</h2>
+<p>  最早且广为人知的C2(command&amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的方式,即客户端在主机A执行后，客户端监听，在服务端输入主机A的IP与端口后，才能进行通讯。<br>
+  后来因为内网环境与防火墙的因素，发展出了“被动连接”方式的第二代C2框架，例如GHOST、大灰狼，与“主动连接”相反，即服务端监听，客户端主动连接服务端。此时出现了两种配置方式，一是FTP上线、二是域名解析上线。有效适应大多数网络环境,但易溯源、网络数据包易被提取特征、不易于现代红队协同使用。<br>
+  为了解决这些问题，发展出了第三代C2框架例如cobalt strike,它支持HTTP、HTTPS、DNS等协议通讯,由TeamServer转发请求,隐秘性好、易于扩展、适合现代红队协同工作,如今被广泛使用。<br>
+  本系列将尝试开发一个第三代C2框架</p>
+<h2 id="设计-c2-基础架构">设计 C2 基础架构</h2>
+<p>  我们需要实现一个控制端发送命令，实现一个客户端执行命令，实现一个TeamServer服务，接收转发来自客户端与控制端的请求。</p>
+<h4 id="daffodilc2项目分为三个组件">DaffodilC2项目分为三个组件</h4>
+<ul>
+<li>DaffodilServer: <code>TeamServer服务</code> go实现</li>
+<li>ControlServer: <code>控制端发送命令</code> go实现</li>
+<li>client:<code>客户端执行命令</code> cpp实现</li>
+</ul>
+<h2 id="实现teamserver服务">实现TeamServer服务</h2>
+<p>  由于之前没学过go，为了在实现C2的过程中顺便学习一下go语言，我决定用go实现一个http服务,将来自控制端与客户端的请求存储下来，客户端去读取、解析、执行，控制端读取并显示结果。</p>
+<h2 id="实现controlserver服务">实现ControlServer服务</h2>
+<p>  先实现一个上线功能，解析TeamServer转发的JSON。</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func GetInf(w http.ResponseWriter, r *http.Request) {
+
+	formData := make(map[string]interface{})
+	// 调用json包的解析，解析请求body
+	json.NewDecoder(r.Body).Decode(&amp;formData)
+	for key, value := range formData {
+		log.Println(&quot;上线啦！ key:&quot;, key, &quot; =&gt; value :&quot;, value)
+	}
+
+}
+
+func main() {
+	log.Println(&quot;控制端开始监听&quot;)
+	http.HandleFunc(&quot;/ControlServer&quot;, GetInf)
+	http.ListenAndServe(&quot;:8001&quot;, nil) //启动服务器并监听本地的 8001 端口。当有请求过来时，则根据路由执行对应的handler函数
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644849679380.jpg" alt="" loading="lazy"></figure>
+<p>未完待续。。。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ 某知名语音PC客户端RCE漏洞]]></title>
         <id>https://daffodi11.github.io/post/mou-zhi-ming-yu-yin-pc-ke-hu-duan-rce-lou-dong/</id>
