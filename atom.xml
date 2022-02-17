@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-02-17T02:47:22.056Z</updated>
+    <updated>2022-02-17T02:50:32.414Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -45,7 +45,7 @@
 ReleaseResFile(IDR_EXE1, L&quot;EXE&quot;, L&quot;C:\\test.exe&quot;);
 </code></pre>
 <h2 id="二-文件转为byte编译释放">二、文件转为byte编译释放</h2>
-<p>这种方式优点是不易被检测、麻烦 缺点是体积大</p>
+<p>这种方式优点是不易被检测  缺点是体积大、麻烦</p>
 <h4 id="1-将文件转化为byte生成源码">1、将文件转化为byte生成源码</h4>
 <pre><code class="language-cpp">BOOL SaveCode(char *FileName) 
 {

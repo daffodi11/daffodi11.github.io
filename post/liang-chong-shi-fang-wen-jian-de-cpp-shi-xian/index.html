@@ -118,7 +118,7 @@ BOOL ReleaseResFile(WORD wResID, LPCTSTR szResType, LPCTSTR szFileName)
 ReleaseResFile(IDR_EXE1, L&quot;EXE&quot;, L&quot;C:\\test.exe&quot;);
 </code></pre>
 <h2 id="二-文件转为byte编译释放">二、文件转为byte编译释放</h2>
-<p>这种方式优点是不易被检测、麻烦 缺点是体积大</p>
+<p>这种方式优点是不易被检测  缺点是体积大、麻烦</p>
 <h4 id="1-将文件转化为byte生成源码">1、将文件转化为byte生成源码</h4>
 <pre><code class="language-cpp">BOOL SaveCode(char *FileName) 
 {
