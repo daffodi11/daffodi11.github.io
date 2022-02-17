@@ -1,22 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://daffodi11.github.io</id>
-    <title>Daffodil</title>
-    <updated>2022-02-17T02:47:22.056Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://daffodi11.github.io"/>
-    <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>https://daffodi11.github.io/images/avatar.png</logo>
-    <icon>https://daffodi11.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2022, Daffodil</rights>
-    <entry>
-        <title type="html"><![CDATA[两种释放文件的CPP实现]]></title>
-        <id>https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/</id>
-        <link href="https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/">
-        </link>
-        <updated>2022-02-17T02:29:44.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="一-资源释放">一、资源释放</h2>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>两种释放文件的CPP实现 - Daffodil</title>
+<link rel="shortcut icon" href="https://daffodi11.github.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/media/css/tailwind.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="两种释放文件的CPP实现 - Daffodil - Atom Feed" href="https://daffodi11.github.io/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-220193003-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-220193003-2');
+  </script>
+    
+
+  <meta name="description" content="一、资源释放
+这种方法优点是体积小 缺点是容易检测 网上有很多资料
+BOOL ReleaseResFile(WORD wResID, LPCTSTR szResType, LPCTSTR szFileName)
+{
+	if (szResTy..." />
+  <meta property="og:title" content="两种释放文件的CPP实现 - Daffodil">
+  <meta property="og:description" content="一、资源释放
+这种方法优点是体积小 缺点是容易检测 网上有很多资料
+BOOL ReleaseResFile(WORD wResID, LPCTSTR szResType, LPCTSTR szFileName)
+{
+	if (szResTy..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/" />
+  <meta property="og:image" content="https://daffodi11.github.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="两种释放文件的CPP实现 - Daffodil">
+  <meta name="twitter:description" content="一、资源释放
+这种方法优点是体积小 缺点是容易检测 网上有很多资料
+BOOL ReleaseResFile(WORD wResID, LPCTSTR szResType, LPCTSTR szFileName)
+{
+	if (szResTy...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://daffodi11.github.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://daffodi11.github.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Daffodil
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          两种释放文件的CPP实现
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2022-02-17 · 22 min read</div>
+          
+            <a href="https://daffodi11.github.io/tag/pkDCRUBB8/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              红队武器开发
+            </a>
+          
+            <a href="https://daffodi11.github.io/tag/2VgSXZx_z/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              redteam
+            </a>
+          
+            <a href="https://daffodi11.github.io/tag/rt7PpEPh7/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              windows
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="一-资源释放">一、资源释放</h2>
 <p>这种方法优点是体积小 缺点是容易检测 网上有很多资料</p>
 <pre><code class="language-cpp">BOOL ReleaseResFile(WORD wResID, LPCTSTR szResType, LPCTSTR szFileName)
 {
@@ -300,247 +373,251 @@ return 0;
 </code></pre>
 <h4 id="编译运行释放文件">编译运行释放文件</h4>
 <figure data-type="image" tabindex="2"><img src="https://daffodi11.github.io/post-images/1645065936639.jpg" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[红队武器研发：尝试实现一个现代C2框架-DaffodilC2]]></title>
-        <id>https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/</id>
-        <link href="https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/">
-        </link>
-        <updated>2022-02-14T12:23:20.000Z</updated>
-        <content type="html"><![CDATA[<p>本系列将尝试开发一个现代化的C2框架<br>
-由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。</p>
-<h2 id="浅谈c2框架的发展历史">浅谈C2框架的发展历史</h2>
-<p>  最早且广为人知的C2(command&amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的方式,即客户端在主机A执行后，客户端监听，在服务端输入主机A的IP与端口后，才能进行通讯。<br>
-  后来因为内网环境与防火墙的因素，发展出了“被动连接”方式的第二代C2框架，例如GHOST、大灰狼，与“主动连接”相反，即服务端监听，客户端主动连接服务端。此时出现了两种配置方式，一是FTP上线、二是域名解析上线。有效适应大多数网络环境,但易溯源、网络数据包易被提取特征、不易于现代红队协同使用。<br>
-  为了解决这些问题，发展出了第三代C2框架例如cobalt strike,它支持HTTP、HTTPS、DNS等协议通讯,由TeamServer转发请求,隐秘性好、易于扩展、适合现代红队协同工作,如今被广泛使用。<br>
-  本系列将尝试开发一个第三代C2框架</p>
-<h2 id="设计-c2-基础架构">设计 C2 基础架构</h2>
-<p>  我们需要实现一个控制端发送命令，实现一个客户端执行命令，实现一个TeamServer服务，接收转发来自客户端与控制端的请求。</p>
-<h4 id="daffodilc2项目分为三个组件">DaffodilC2项目分为三个组件</h4>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
 <ul>
-<li>DaffodilServer: <code>TeamServer服务</code> go实现</li>
-<li>ControlServer: <code>控制端发送命令</code> go实现</li>
-<li>client:<code>客户端执行命令</code> cpp实现</li>
+<li><a href="#%E4%B8%80-%E8%B5%84%E6%BA%90%E9%87%8A%E6%94%BE">一、资源释放</a></li>
+<li><a href="#%E4%BA%8C-%E6%96%87%E4%BB%B6%E8%BD%AC%E4%B8%BAbyte%E7%BC%96%E8%AF%91%E9%87%8A%E6%94%BE">二、文件转为byte编译释放</a><br>
+*
+<ul>
+<li><a href="#1-%E5%B0%86%E6%96%87%E4%BB%B6%E8%BD%AC%E5%8C%96%E4%B8%BAbyte%E7%94%9F%E6%88%90%E6%BA%90%E7%A0%81">1、将文件转化为byte生成源码</a></li>
+<li><a href="#%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81">编译源码</a></li>
+<li><a href="#%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E9%87%8A%E6%94%BE%E6%96%87%E4%BB%B6">编译运行释放文件</a></li>
 </ul>
-<h2 id="实现teamserver服务">实现TeamServer服务</h2>
-<p>  由于之前没学过go，为了在实现C2的过程中顺便学习一下go语言，我决定用go实现一个http服务,将来自控制端与客户端的请求存储下来，客户端去读取、解析、执行，控制端读取并显示结果。</p>
-<h2 id="实现controlserver服务">实现ControlServer服务</h2>
-<p>  先实现一个上线功能，解析TeamServer转发的JSON。</p>
-<pre><code class="language-go">package main
+</li>
+</ul>
+</li>
+</ul>
 
-import (
-	&quot;encoding/json&quot;
-	&quot;log&quot;
-	&quot;net/http&quot;
-)
+      </div>
+    </div>
 
-func GetInf(w http.ResponseWriter, r *http.Request) {
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
 
-	formData := make(map[string]interface{})
-	// 调用json包的解析，解析请求body
-	json.NewDecoder(r.Body).Decode(&amp;formData)
-	for key, value := range formData {
-		log.Println(&quot;上线啦！ key:&quot;, key, &quot; =&gt; value :&quot;, value)
-	}
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-}
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://daffodi11.github.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://daffodi11.github.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
 
-func main() {
-	log.Println(&quot;控制端开始监听&quot;)
-	http.HandleFunc(&quot;/ControlServer&quot;, GetInf)
-	http.ListenAndServe(&quot;:8001&quot;, nil) //启动服务器并监听本地的 8001 端口。当有请求过来时，则根据路由执行对应的handler函数
-}
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644849679380.jpg" alt="" loading="lazy"></figure>
-<p>未完待续。。。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ 某知名语音PC客户端RCE漏洞]]></title>
-        <id>https://daffodi11.github.io/post/mou-zhi-ming-yu-yin-pc-ke-hu-duan-rce-lou-dong/</id>
-        <link href="https://daffodi11.github.io/post/mou-zhi-ming-yu-yin-pc-ke-hu-duan-rce-lou-dong/">
-        </link>
-        <updated>2022-02-14T05:40:38.000Z</updated>
-        <content type="html"><![CDATA[<p>pc客户端是electron框架的<br>
-房间公告存在存储XSS<br>
-<img src="https://daffodi11.github.io/post-images/1644817802630.jpg" alt="" loading="lazy"><br>
-于是乎<br>
-<img src="https://daffodi11.github.io/post-images/1644817806860.jpg" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644817811683.jpg" alt="" loading="lazy"><br>
-任何人只要进入房间 即执行任意命令</p>
-<p>第一时间联系厂商 无人处理后提交某天平台<br>
-<img src="https://daffodi11.github.io/post-images/1644817816257.jpg" alt="" loading="lazy"></p>
-<p>2021-01-15 11:16:27-报告相关厂商与平台<br>
-2022-02-14 13:47:27-测试已修复后披露</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Break process tree by configuring automatic debugging]]></title>
-        <id>https://daffodi11.github.io/post/break-process-tree-by-configuring-automatic-debugging-for-application-crashes/</id>
-        <link href="https://daffodi11.github.io/post/break-process-tree-by-configuring-automatic-debugging-for-application-crashes/">
-        </link>
-        <updated>2022-02-14T03:49:53.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="1-configure-automatic-debugging">1 Configure automatic debugging</h3>
-<p>在x86计算机上,后期调试设置存储在\HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
-有两个注册表项用于后期调试:<br>
-64位的存储在\HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
-32位存储在\HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
-在这些键中应该出现两个注册表值:<br>
-Debugger<br>
-此REG_SZ值指定将处理后期调试的调试器。<br>
-Auto<br>
-此REG_SZ值始终为0或1。如果Auto设置为0,则在后期调试之前将显示一个消息框。</p>
-<h3 id="2-code">2 Code</h3>
-<pre><code class="language-cpp">	//HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug
-	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Auto /t REG_SZ /d 1 /f&quot;);
-	system(&quot;reg add \&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug\&quot; /v Debugger /t REG_SZ /d \&quot;notepad.exe\&quot; /f&quot;);
-	//Crashing the application
-	*((int*)NULL) = 0;
-</code></pre>
-<h3 id="3">3</h3>
-<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644631386131.jpg" alt="" loading="lazy"></figure>
-<h3 id="4-tips-for-blue-team">4 Tips for blue team</h3>
-<p>Keep an eye on<br>
-\HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug<br>
-\HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\AeDebug</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Web-安全检测-writeup]]></title>
-        <id>https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/</id>
-        <link href="https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/">
-        </link>
-        <updated>2022-02-13T14:16:08.000Z</updated>
-        <content type="html"><![CDATA[<p>打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关<br>
-测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞<br>
-直接网址填写http://127.0.0.1 发现可以读取<br>
-<img src="https://daffodi11.github.io/post-images/1644761813449.png" alt="" loading="lazy"><br>
-去burp爆破 路径<br>
-<img src="https://daffodi11.github.io/post-images/1644761833137.png" alt="" loading="lazy"><br>
-发现路径 http://127.0.0.1/admin 去读取一下<br>
-<img src="https://daffodi11.github.io/post-images/1644761874616.png" alt="" loading="lazy"><br>
-发现include123.php 再去读取一下 得到源码<br>
-<img src="https://daffodi11.github.io/post-images/1644761900966.png" alt="" loading="lazy"><br>
-发现过滤了很多命令 而且有文件包含洞 先试一下SESSION包含<br>
-BURP抓包 改包<br>
-<img src="https://daffodi11.github.io/post-images/1644761924277.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644761939292.png" alt="" loading="lazy"><br>
-成功 然后尝试写入PHP代码<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09echo%091;?><br>
-<img src="https://daffodi11.github.io/post-images/1644761960184.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644761985228.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644762003254.png" alt="" loading="lazy"><br>
-成功执行 ！看一下PHPINFO<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09phpinfo();?><br>
-<img src="https://daffodi11.github.io/post-images/1644762024528.png" alt="" loading="lazy"><br>
-但是过滤了太多函数没有读取文件的好方法 但是发现short_open_tag 开启 ！可以用短标签<?=?><br>
-<img src="https://daffodi11.github.io/post-images/1644762043146.png" alt="" loading="lazy"><br>
-想要绕过check函数写shell，过滤了空格可以用 %09或者\t代替,过滤了php可以用短标签<?=?>代替，相当于&lt;? echo&gt;;<br>
-过滤了_可以用<?=``?>代替，反引号在php中有执行命令的效果</p>
-<?=`ls\t/`;?>
-<p>这部分知识可以在https://www.cnblogs.com/lthlsy/p/14894226.html这里找到<br>
-直接 ls 看一下目录 找到FLAG文件<br>
-<img src="https://daffodi11.github.io/post-images/1644762119646.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644762101464.png" alt="" loading="lazy"><br>
-直接 cat flag<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?=`cat\t/???????.sh`;?><br>
-得到<br>
-<img src="https://daffodi11.github.io/post-images/1644762220446.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644762214929.png" alt="" loading="lazy"><br>
-flag{4ede2e97-cbe8-424d-b9e6-f2150ad4515b</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Misc-鸣雏恋-writeup]]></title>
-        <id>https://daffodi11.github.io/post/misc-ming-chu-lian-writeup/</id>
-        <link href="https://daffodi11.github.io/post/misc-ming-chu-lian-writeup/">
-        </link>
-        <updated>2022-02-13T14:00:17.000Z</updated>
-        <content type="html"><![CDATA[<p>第一步 用binwalk 解压doc 得到love.zip和key.txt<br>
-<img src="https://daffodi11.github.io/post-images/1644761387395.png" alt="" loading="lazy"><br>
-第二步 用VIM 查看 key.txt 发现是0字符隐藏加密<br>
-<img src="https://daffodi11.github.io/post-images/1644761403891.png" alt="" loading="lazy"><br>
-第三步<br>
-在线网站解密出压缩包密码 http://330k.github.io/misc_tools/unicode_steganography.html<br>
-<img src="https://daffodi11.github.io/post-images/1644761462543.png" alt="" loading="lazy"><br>
-解压出 雏田和鸣人的照片 盲猜二进制 写个脚本整理 根据大小标注01<br>
-<img src="https://daffodi11.github.io/post-images/1644761529045.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644761537975.png" alt="" loading="lazy"></p>
-<pre><code class="language-python">import os
-path = r'C:\Users\charon\Desktop\_鸣雏恋.docx.extracted\0\_rels\love\out'
-path_list = os.listdir(path)
-path_list.sort(key=lambda x:int(x[:-4]))
-def write(num):
-    f = open(r&quot;C:\Users\charon\Desktop\test.txt&quot;, &quot;a&quot;)
-    f.write(num)
-    f.close()
-for i in range(0,129488):
-    if os.path.getsize(path+r'\\'+path_list[i]) &gt; 262:
-        write(&quot;1&quot;)
-    else:
-        write(&quot;0&quot;)
-</code></pre>
-<p>得到二进制 在线二进制转字符串<br>
-<img src="https://daffodi11.github.io/post-images/1644761696223.png" alt="" loading="lazy"><br>
-base64转图片得到FLAG<br>
-<img src="https://daffodi11.github.io/post-images/1644761718794.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644761724400.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Misc-层层取证-writeup]]></title>
-        <id>https://daffodi11.github.io/post/misc-ceng-ceng-qu-zheng-writeup/</id>
-        <link href="https://daffodi11.github.io/post/misc-ceng-ceng-qu-zheng-writeup/">
-        </link>
-        <updated>2022-02-13T13:40:31.000Z</updated>
-        <content type="html"><![CDATA[<p>题目下载下来是disk_image.rar memdump.rar 一个是内存映像 一个是磁盘映像<br>
-先用volatility分析内存映像 先用imageinfo查看映像具体信息 拿到profile<br>
-/home/kali/Desktop/volatility_2.6_lin64_standalone -f &quot;/home/kali/Desktop/memdump.mem&quot; imageinfo<br>
-<img src="https://daffodi11.github.io/post-images/1644759803615.png" alt="" loading="lazy"><br>
-在查看其他基本信息:进程信息pslist  cmd命令 cmdscan 文件信息 fielscan 账户密码 hashdump<br>
-<img src="https://daffodi11.github.io/post-images/1644759825996.png" alt="" loading="lazy"><br>
-发现有可疑进程 notepad.exe dump下来 grep一下看看有没有什么关键信息<br>
-<img src="https://daffodi11.github.io/post-images/1644759872036.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644759876332.png" alt="" loading="lazy"><br>
-strings -e l /home/kali/Desktop/notepad/3056.dmp | grep flag.txt<br>
-可以发现这里有一个flag.txt在xiaoming的桌面  然后CMDSCAN 啥的都没有可用的信息<br>
-这里在去提取一下账户密码<br>
-<img src="https://daffodi11.github.io/post-images/1644759909026.png" alt="" loading="lazy"><br>
-/home/kali/Desktop/volatility_2.6_lin64_standalone -f &quot;/home/kali/Desktop/memdump.mem&quot; --profile=Win7SP1x64 hashdump<br>
-Volatility Foundation Volatility Framework 2.6<br>
-Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>
-Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>
-XinSai:1000:aad3b435b51404eeaad3b435b51404ee:27caa41e7118fd4429d9b9cbd87aaa40:::<br>
-XiaoMing:1001:aad3b435b51404eeaad3b435b51404ee:92efa7f9f2740956d51157f46521f941:::</p>
-<p>去CMD5解密 只能解密xiaoming的 admin和guest是空 xinsai的解不来<br>
-<img src="https://daffodi11.github.io/post-images/1644759939987.png" alt="" loading="lazy"><br>
-密码是 xiaoming_handsome<br>
-这里感觉xiaoming 很关键 在grep一下xiaoming<br>
-<img src="https://daffodi11.github.io/post-images/1644760005974.png" alt="" loading="lazy"><br>
-发现xiaoming1314<br>
-直接用010editer在内存映像里搜xiaoming1314<br>
-发现一个RTF文件 还原出来看一下<br>
-<img src="https://daffodi11.github.io/post-images/1644760025088.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644760039695.png" alt="" loading="lazy"><br>
-得到一个word文档密码：xiaoming1314<br>
-在内存映像里猛搜 docx doc word 都没有的情况下 转战磁盘映像！<br>
-先用FTK imager加载 记得要选可读写<br>
-<img src="https://daffodi11.github.io/post-images/1644760098012.png" alt="" loading="lazy"><br>
-挂载之后发现一个加密磁盘 一个正常磁盘 直接去xiaoming桌面看flag<br>
-<img src="https://daffodi11.github.io/post-images/1644760111166.png" alt="" loading="lazy"><br>
-提示发现要仿真 百度一下方法 https://www.cnblogs.com/ndash/p/NDASH.html<br>
-这里有详细方法 但是我VM 一直引导失败 折腾了两个小时 于是直接放弃 我继续在磁盘翻翻文件<br>
-去找那个word文档  功夫不负苦心人 我最后在G:\Users\XiaoMing\AppData\Local\Temp发现两个流量文件 直接点进去看 分析一下 体积大一点的流量包 一无所获  但是体积小的流量包 挨个追踪数据流  最后发现了RAR文件<br>
-<img src="https://daffodi11.github.io/post-images/1644760136026.png" alt="" loading="lazy"><br>
-16进制原始数据保存<br>
-<img src="https://daffodi11.github.io/post-images/1644760151823.png" alt="" loading="lazy"><br>
-打开这个rar 提示与开机密码相同 还记得咱们提取的xiaoming的密码吗 xiaoming_handsome<br>
-<img src="https://daffodi11.github.io/post-images/1644760166748.png" alt="" loading="lazy"><br>
-解压出来 打开flag.docx 可以发现 这个就是那个word  密码也知道了 xiaoming1314<br>
-<img src="https://daffodi11.github.io/post-images/1644760189898.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644760433106.png" alt="" loading="lazy"><br>
-flag{9ca871b668f2-b668-097c-cbm8-9op404c891e2}</p>
-]]></content>
-    </entry>
-</feed>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script type="application/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script type="application/javascript">
+
+  var gitalk = new Gitalk({
+    clientID: '14567eb76fbd8517a142',
+    clientSecret: '0554531da4bcec4ecfed7c23af678bb541868c75',
+    repo: 'daffodi11.github.io',
+    owner: 'daffodi11',
+    admin: ['daffodi11'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+    
+  
+</body>
+
+</html>
