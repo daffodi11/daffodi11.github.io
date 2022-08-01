@@ -134,7 +134,7 @@ admin密码 成功修改 进入admin后台<br>
 购买一个hint 根据提示下载源码<br>
 <img src="https://daffodi11.github.io/post-images/1659318809004.jpg" alt="" loading="lazy"></p>
 <p>app.py</p>
-<pre><code>@app.route(&quot;/buy&quot;, methods=['POST'])
+<pre><code class="language-python">@app.route(&quot;/buy&quot;, methods=['POST'])
 def buy():
     if not session:
         return redirect('/login')
@@ -183,7 +183,7 @@ def buy():
         return &quot;success&quot;
 </code></pre>
 <p>pay.go</p>
-<pre><code>package main
+<pre><code class="language-go">package main
 
 import (
 	&quot;github.com/buger/jsonparser&quot;
