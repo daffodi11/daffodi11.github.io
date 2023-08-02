@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Web-安全检测-writeup - Daffodil</title>
+<title>Web-unzip-writeup - Daffodil</title>
 <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="http://localhost:4000/media/css/tailwind.css">
 <link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Web-安全检测-writeup - Daffodil - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Web-unzip-writeup - Daffodil - Atom Feed" href="http://localhost:4000/atom.xml">
 
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-220193003-2"></script>
@@ -23,24 +23,42 @@
   </script>
     
 
-  <meta name="description" content="打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关
-测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞
-直接网址填写http://127.0.0.1 发现可以读..." />
-  <meta property="og:title" content="Web-安全检测-writeup - Daffodil">
-  <meta property="og:description" content="打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关
-测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞
-直接网址填写http://127.0.0.1 发现可以读..." />
+  <meta name="description" content="利用ln链接
+
+上传1.zip 2.zip
+连接webshell
+
+获取flag
+
+flag值：
+..." />
+  <meta property="og:title" content="Web-unzip-writeup - Daffodil">
+  <meta property="og:description" content="利用ln链接
+
+上传1.zip 2.zip
+连接webshell
+
+获取flag
+
+flag值：
+..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="http://localhost:4000/post/web-an-quan-jian-ce-writeup/" />
+  <meta property="og:url" content="http://localhost:4000/post/web-unzip-writeup/" />
   <meta property="og:image" content="http://localhost:4000/images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="Web-安全检测-writeup - Daffodil">
-  <meta name="twitter:description" content="打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关
-测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞
-直接网址填写http://127.0.0.1 发现可以读...">
+  <meta name="twitter:title" content="Web-unzip-writeup - Daffodil">
+  <meta name="twitter:description" content="利用ln链接
+
+上传1.zip 2.zip
+连接webshell
+
+获取flag
+
+flag值：
+...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="http://localhost:4000/post/web-an-quan-jian-ce-writeup/">
+  <link rel="canonical" href="http://localhost:4000/post/web-unzip-writeup/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -60,11 +78,16 @@
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          Web-安全检测-writeup
+          Web-unzip-writeup
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2022-02-13 · 2 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2023-08-02 · 1 min read</div>
+          
+            <a href="http://localhost:4000/tag/QYFoY-0pV/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              2023CISCN
+            </a>
           
             <a href="http://localhost:4000/tag/web/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
               <i class="ri-hashtag"></i>
@@ -76,50 +99,16 @@
               writeup
             </a>
           
-            <a href="http://localhost:4000/tag/Fknh8imRd/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
-              <i class="ri-hashtag"></i>
-              祥云杯
-            </a>
-          
         </div>
         <div class="markdown mb-8" v-pre>
-          <p>打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关<br>
-测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞<br>
-直接网址填写http://127.0.0.1 发现可以读取<br>
-<img src="http://localhost:4000/post-images/1644761813449.png" alt="" loading="lazy"><br>
-去burp爆破 路径<br>
-<img src="http://localhost:4000/post-images/1644761833137.png" alt="" loading="lazy"><br>
-发现路径 http://127.0.0.1/admin 去读取一下<br>
-<img src="http://localhost:4000/post-images/1644761874616.png" alt="" loading="lazy"><br>
-发现include123.php 再去读取一下 得到源码<br>
-<img src="http://localhost:4000/post-images/1644761900966.png" alt="" loading="lazy"><br>
-发现过滤了很多命令 而且有文件包含洞 先试一下SESSION包含<br>
-BURP抓包 改包<br>
-<img src="http://localhost:4000/post-images/1644761924277.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1644761939292.png" alt="" loading="lazy"><br>
-成功 然后尝试写入PHP代码<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09echo%091;?><br>
-<img src="http://localhost:4000/post-images/1644761960184.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1644761985228.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1644762003254.png" alt="" loading="lazy"><br>
-成功执行 ！看一下PHPINFO<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?php%09phpinfo();?><br>
-<img src="http://localhost:4000/post-images/1644762024528.png" alt="" loading="lazy"><br>
-但是过滤了太多函数没有读取文件的好方法 但是发现short_open_tag 开启 ！可以用短标签<?=?><br>
-<img src="http://localhost:4000/post-images/1644762043146.png" alt="" loading="lazy"><br>
-想要绕过check函数写shell，过滤了空格可以用 %09或者\t代替,过滤了php可以用短标签<?=?>代替，相当于&lt;? echo&gt;;<br>
-过滤了_可以用<?=``?>代替，反引号在php中有执行命令的效果</p>
-<?=`ls\t/`;?>
-<p>这部分知识可以在https://www.cnblogs.com/lthlsy/p/14894226.html这里找到<br>
-直接 ls 看一下目录 找到FLAG文件<br>
-<img src="http://localhost:4000/post-images/1644762119646.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1644762101464.png" alt="" loading="lazy"><br>
-直接 cat flag<br>
-http://127.0.0.1/admin/include123.php?u=/tmp/sess_28d5aae86a8d2686a038956f34468348%26<?=`cat\t/???????.sh`;?><br>
-得到<br>
-<img src="http://localhost:4000/post-images/1644762220446.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1644762214929.png" alt="" loading="lazy"><br>
-flag{4ede2e97-cbe8-424d-b9e6-f2150ad4515b</p>
+          <p>利用ln链接<br>
+<img src="http://localhost:4000/post-images/1690975758781.png" alt="" loading="lazy"><br>
+上传1.zip 2.zip<br>
+连接webshell<br>
+<img src="http://localhost:4000/post-images/1690975764886.png" alt="" loading="lazy"></p>
+<p>获取flag<br>
+<img src="http://localhost:4000/post-images/1690975770546.png" alt="" loading="lazy"><br>
+flag值：</p>
 
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
