@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://daffodi11.github.io</id>
     <title>Daffodil</title>
-    <updated>2023-08-02T14:05:42.413Z</updated>
+    <updated>2023-08-04T03:55:21.317Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://daffodi11.github.io"/>
     <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
@@ -11,7 +11,149 @@
     <icon>https://daffodi11.github.io/favicon.ico</icon>
     <rights>All rights reserved 2023, Daffodil</rights>
     <entry>
-        <title type="html"><![CDATA[Re-2023CISCN东北赛区线下赛Re1-writeup]]></title>
+        <title type="html"><![CDATA[Misc-2023CISCN东北赛区线下赛-剪不断理还乱-writeup]]></title>
+        <id>https://daffodi11.github.io/post/misc-2023ciscn-dong-bei-sai-qu-xian-xia-sai-jian-bu-duan-li-huan-luan-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-2023ciscn-dong-bei-sai-qu-xian-xia-sai-jian-bu-duan-li-huan-luan-writeup/">
+        </link>
+        <updated>2023-08-04T03:24:04.000Z</updated>
+        <content type="html"><![CDATA[<p>线下没做出来这道题 感谢赛后App1e_Tree师傅的帮助</p>
+<p>题目是一张png图片<br>
+<img src="https://daffodi11.github.io/post-images/1691119694336.png" alt="" loading="lazy"><br>
+拖到tweakpng查看<br>
+<img src="https://daffodi11.github.io/post-images/1691119755869.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691119774324.png" alt="" loading="lazy"><br>
+中间有一块IDAT大小不对 按照PNG的格式要求应该是 最小的IDAT在最下面 结合题目<br>
+判断是IDAT顺序不对<br>
+尝试对IDAT的顺序进行爆破<br>
+首先我们对图片进行拆分 先<br>
+把图片的文件头拆分出来命名为head<br>
+文件尾拆分出来命名为tail<br>
+最小的那块长度为18846的IDAT拆分出来命名为a45<br>
+<img src="https://daffodi11.github.io/post-images/1691120043233.png" alt="" loading="lazy"><br>
+然后把剩余的IDAT块等分<br>
+脚本</p>
+<pre><code class="language-py">import os
+
+# 打开要分割的文件
+with open('剪不断理还乱.png', 'rb') as f:
+    # 获取文件的长度
+    file_size = os.path.getsize('剪不断理还乱.png')
+    print(file_size)
+    print(file_size/65548)
+    # 计算需要分割成多少块
+    num_blocks = file_size // 65548 
+
+    # 分割文件
+    for i in range(num_blocks):
+        # 计算当前块的起始位置
+        start = i * 65548
+        # 计算当前块的结束位置
+        end = min(start + 65548, file_size)
+
+        # 定位文件指针到当前块的起始位置
+        f.seek(start)
+        # 读取当前块的数据
+        data = f.read(end - start)
+
+        # 将当前块的数据写入到新的文件中
+         with open('a{}'.format(i), 'wb') as block_file:
+            block_file.write(data)
+
+</code></pre>
+<p><img src="https://daffodi11.github.io/post-images/1691120432668.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691120448024.png" alt="" loading="lazy"><br>
+然后写脚本爆破</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>结果可以看到a13应该是第一块IDAT<br>
+<img src="https://daffodi11.github.io/post-images/1691120661483.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691120665283.png" alt="" loading="lazy"><br>
+修改脚本</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'a13',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>我们再来爆破第二块IDAT<br>
+不正确的IDAT块不能正确显示像这样<br>
+<img src="https://daffodi11.github.io/post-images/1691120794562.png" alt="" loading="lazy"><br>
+正确的是这样 所以第二块IDAT是a4<br>
+<img src="https://daffodi11.github.io/post-images/1691120782755.png" alt="" loading="lazy"><br>
+以此类推<br>
+最后的脚本是</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'a11',  'a2', 'a15', 'a41', 'a27',
+              'a28',  'a40', 'a5', 'a8', 'a10',
+              'a12', 'a44', 'a9', 'a25', 'a36',
+              'a38', 'a4', 'a42', 'a7', 'a3',
+              'a33', 'a19', 'a34', 'a17', 'a14',
+              'a43', 'a32', 'a13', 'a22', 'a21',
+              'a18', 'a37', 'a30', 'a29', 'a24',
+              'a39', 'a31', 'a23', 'a1', 'a16',
+              'a35', 'a0', 'a20', 'a6', 'a26',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>结果是<br>
+<img src="https://daffodi11.github.io/post-images/1691120920930.png" alt="" loading="lazy"></p>
+<p>根据提示 密码是DASCTF@yyds@<br>
+脚本一把梭<br>
+https://github.com/livz/cloacked-pixel<br>
+这里我们用py3版本的<br>
+https://github.com/livz/cloacked-pixel/blob/8fc84e2ba387c363053524c35c5e55cae16063cd/crypt_for_py3.py<br>
+搞定<br>
+<img src="https://daffodi11.github.io/post-images/1691121231852.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Re-2023CISCN东北赛区线下赛-Re1-writeup]]></title>
         <id>https://daffodi11.github.io/post/re-2023ciscn-dong-bei-sai-qu-xian-xia-sai-re-writeup/</id>
         <link href="https://daffodi11.github.io/post/re-2023ciscn-dong-bei-sai-qu-xian-xia-sai-re-writeup/">
         </link>
@@ -85,7 +227,7 @@ for i in range(len(m)):
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛web1-writeup]]></title>
+        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛-web1-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/">
         </link>
@@ -222,7 +364,7 @@ if __name__ == '__main__':
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛web4-writeup]]></title>
+        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛-web4-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/">
         </link>
@@ -287,7 +429,7 @@ if __name__ == &quot;__main__&quot;:
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Misc-被加密的生产流量-writeup]]></title>
+        <title type="html"><![CDATA[Misc-2023CISCN初赛-被加密的生产流量-writeup]]></title>
         <id>https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/</id>
         <link href="https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/">
         </link>
@@ -297,7 +439,7 @@ if __name__ == &quot;__main__&quot;:
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Misc-Sign_in_passwd-writeup]]></title>
+        <title type="html"><![CDATA[Misc-2023CISCN初赛-Sign_in_passwd-writeup]]></title>
         <id>https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/</id>
         <link href="https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/">
         </link>
@@ -307,7 +449,7 @@ if __name__ == &quot;__main__&quot;:
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Re-babyRE-writeup]]></title>
+        <title type="html"><![CDATA[Re-2023CISCN初赛-babyRE-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-re-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-re-writeup/">
         </link>
@@ -331,7 +473,7 @@ for i in key:
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-Dumpit-writeup]]></title>
+        <title type="html"><![CDATA[Web-2023CISCN初赛-Dumpit-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-dumpit-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-dumpit-writeup/">
         </link>
@@ -342,7 +484,7 @@ http://eci-2zefgz6c8k3wkvuo49ln.cloudeci1.ichunqiu.com:8888/?db=%0aenv%0a&amp;ta
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-unzip-writeup]]></title>
+        <title type="html"><![CDATA[Web-2023CISCN初赛-unzip-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-unzip-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-unzip-writeup/">
         </link>
@@ -358,7 +500,7 @@ flag值：</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Web-crash-writeup]]></title>
+        <title type="html"><![CDATA[Web-2022强网杯-crash-writeup]]></title>
         <id>https://daffodi11.github.io/post/web-crash-writeup/</id>
         <link href="https://daffodi11.github.io/post/web-crash-writeup/">
         </link>
@@ -454,158 +596,6 @@ if __name__ == '__main__':
 <img src="https://daffodi11.github.io/post-images/1659327367178.jpg" alt="" loading="lazy"><br>
 再次请求首页 拿到flag<br>
 <img src="https://daffodi11.github.io/post-images/1659327604509.jpg" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Web-babyweb-writeup]]></title>
-        <id>https://daffodi11.github.io/post/web-babyweb-writeup/</id>
-        <link href="https://daffodi11.github.io/post/web-babyweb-writeup/">
-        </link>
-        <updated>2022-08-01T01:44:26.000Z</updated>
-        <content type="html"><![CDATA[<p><img src="https://daffodi11.github.io/post-images/1659318282681.jpg" alt="" loading="lazy"><br>
-打开网站首页 只有登录注册功能 注册一个账户 发现admin账户存在 爆破弱口令无果<br>
-<img src="https://daffodi11.github.io/post-images/1659318365736.jpg" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1659318369825.jpg" alt="" loading="lazy"><br>
-随便注册一个账号 进去看功能 发现是个websocket bot<br>
-<img src="https://daffodi11.github.io/post-images/1659318391607.jpg" alt="" loading="lazy"><br>
-<img src="https://daffodi11.github.io/post-images/1659318430993.jpg" alt="" loading="lazy"><br>
-测试下bugreport 功能存在ssrf<br>
-<img src="https://daffodi11.github.io/post-images/1659318503702.jpg" alt="" loading="lazy"><br>
-于是自己创建一个页面<br>
-<img src="https://daffodi11.github.io/post-images/1659318625246.jpg" alt="" loading="lazy"><br>
-执行<br>
-<img src="https://daffodi11.github.io/post-images/1659318697545.jpg" alt="" loading="lazy"><br>
-admin密码 成功修改 进入admin后台<br>
-<img src="https://daffodi11.github.io/post-images/1659318765583.jpg" alt="" loading="lazy"><br>
-购买一个hint 根据提示下载源码<br>
-<img src="https://daffodi11.github.io/post-images/1659318809004.jpg" alt="" loading="lazy"></p>
-<p>app.py</p>
-<pre><code class="language-python">@app.route(&quot;/buy&quot;, methods=['POST'])
-def buy():
-    if not session:
-        return redirect('/login')
-    elif session['user'] != 'admin':
-        return &quot;you are not admin&quot;
-    else :
-        result = {}
-        data = request.get_json()
-        product = data[&quot;product&quot;]
-        for i in product:
-            if not isinstance(i[&quot;id&quot;],int) or not isinstance(i[&quot;num&quot;],int):
-                return &quot;not int&quot;
-            if i[&quot;id&quot;] not in (1,2):
-                return &quot;id error&quot;
-            if i[&quot;num&quot;] not in (0,1,2,3,4,5):
-                return &quot;num error&quot;
-            result[i[&quot;id&quot;]] = i[&quot;num&quot;]
-        sql = &quot;select money,flag,hint from qwb where username='admin'&quot;
-        conn = sqlite3.connect('/root/py/test.db')
-        c = conn.cursor()
-        cursor = c.execute(sql)
-        for row in cursor:
-            if len(row):
-                money = row[0]
-                flag = row[1]
-                hint = row[2]
-        data = b'{&quot;secret&quot;:&quot;xxxx&quot;,&quot;money&quot;:' + str(money).encode() + b',' + request.get_data()[1:] #secret已打码
-        r = requests.post(&quot;http://127.0.0.1:10002/pay&quot;,data).text
-        r = json.loads(r)
-        if r[&quot;error&quot;] != 0:
-            return r[&quot;error&quot;]
-        money = int(r[&quot;money&quot;])
-        hint = hint + result[1]
-        flag = flag + result[2]
-        sql = &quot;update qwb set money={},hint={},flag={} where username='admin'&quot;.format(money,hint,flag)
-        conn = sqlite3.connect('/root/py/test.db')
-        c = conn.cursor()
-        try:
-            c.execute(sql)
-            conn.commit()
-        except Exception as e:
-            conn.rollback()
-            c.close()
-            conn.close()
-            return &quot;database error&quot;
-        return &quot;success&quot;
-</code></pre>
-<p>pay.go</p>
-<pre><code class="language-go">package main
-
-import (
-	&quot;github.com/buger/jsonparser&quot;
-    &quot;fmt&quot;
-	&quot;net/http&quot;
-    &quot;io/ioutil&quot;
-    &quot;io&quot;
-)
-
-func pay(w http.ResponseWriter, r *http.Request) {
-    var cost int64 = 0
-	var err1 int64 = 0
-    json, _ := ioutil.ReadAll(r.Body)
-	secret, err := jsonparser.GetString(json, &quot;secret&quot;)
-	if err != nil {
-        fmt.Println(err)
-    }
-	if secret != &quot;xxxx&quot;{   //secret已打码
-		io.WriteString(w, &quot;{\&quot;error\&quot;: \&quot;secret error\&quot;}&quot;)
-		return
-	}
-	money, err := jsonparser.GetInt(json, &quot;money&quot;)
-	if err != nil {
-        fmt.Println(err)
-    }
-	_, err = jsonparser.ArrayEach(
-			json,
-            func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
-                id, _ := jsonparser.GetInt(value, &quot;id&quot;)
-                num, _ := jsonparser.GetInt(value, &quot;num&quot;)
-				if id == 1{
-					cost = cost + 200 * num
-				}else if id == 2{
-					cost = cost + 1000 * num
-				}else{
-					err1 = 1
-				}
-            },
-        &quot;product&quot;)
-	if err != nil {
-		fmt.Println(err)
-	}
-	if err1 == 1{
-		io.WriteString(w, &quot;{\&quot;error\&quot;: \&quot;id error\&quot;}&quot;)
-		return
-	}
-	if cost &gt; money{
-		io.WriteString(w, &quot;{\&quot;error\&quot;: \&quot;Sorry, your credit is running low!\&quot;}&quot;)
-		return
-	}
-	money = money - cost
-    io.WriteString(w, fmt.Sprintf(&quot;{\&quot;error\&quot;:0,\&quot;money\&quot;: %d}&quot;, money))
-}
-
-func main() {
-    mux := http.NewServeMux()
-    mux.HandleFunc(&quot;/pay&quot;, pay)
-    http.ListenAndServe(&quot;:10002&quot;, mux)
-}
-
-</code></pre>
-<p>python解析含有重复key的json时 后来的值会覆盖原来的值<br>
-如下为例</p>
-<p>{&quot;key&quot;:&quot;1&quot;, &quot;key&quot;:&quot;2&quot;, &quot;key&quot;:&quot;3&quot;, &quot;key2&quot;:&quot;4&quot;}<br>
-经过解析，结果却如下所示：<br>
-{<br>
-&quot;key&quot;:&quot;3&quot;,<br>
-&quot;key2&quot;:&quot;4&quot;<br>
-}<br>
-github.com/buger/jsonparser 解析时只会读取第一个值<br>
-<img src="https://daffodi11.github.io/post-images/1659320478890.jpg" alt="" loading="lazy"></p>
-<p>所以<br>
-<img src="https://daffodi11.github.io/post-images/1659320572398.jpg" alt="" loading="lazy"><br>
-搞定<br>
-<img src="https://daffodi11.github.io/post-images/1659320579312.jpg" alt="" loading="lazy"></p>
-<p>2022 第六届 强网杯</p>
 ]]></content>
     </entry>
 </feed>
