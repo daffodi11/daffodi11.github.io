@@ -1,0 +1,293 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Daffodil</title>
+<link rel="shortcut icon" href="https://daffodi11.github.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/media/css/tailwind.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Daffodil - Atom Feed" href="https://daffodi11.github.io/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-220193003-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-220193003-2');
+  </script>
+    
+
+  <meta name="description" content="温故而知新" />
+</head>
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-line" v-show="showMenu"></i>
+      <i class="ri-menu-3-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        首页
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        归档
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        标签
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        关于
+      </a>
+    
+      <a href="/post/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        友链
+      </a>
+    
+    <a href="https://daffodi11.github.io/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      <h1 class="text-2xl font-bold pb-8 flex justify-center items-center">
+        <i class="ri-hashtag"></i>
+        web
+      </h1>
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2023CISCN东北赛区线下赛-web1-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2023-08-02</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        Flask应用开启了debug=True 可以上传替换
+前面是正常图片的bse64编码后面是我们的恶意app.py源码
+题目源码
+from flask import Flask, render_template, request, send...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web1-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2023CISCN东北赛区线下赛-web4-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2023-08-02</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        非常简单的命令执行
+非常简单的过滤绕过
+题目源码
+from flask import Flask, render_template, request
+import os
+import re
+
+app = Flask(__name__)
+
+
+...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-2023ciscn-dong-bei-sai-qu-xian-xia-sai-web4-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-dumpit-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2023CISCN初赛-Dumpit-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2023-08-02</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        非预期
+http://eci-2zefgz6c8k3wkvuo49ln.cloudeci1.ichunqiu.com:8888/?db=%0aenv%0a&amp;table_2_dump=flag1
+
+...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-dumpit-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-unzip-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2023CISCN初赛-unzip-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2023-08-02</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        利用ln链接
+
+上传1.zip 2.zip
+连接webshell
+
+获取flag
+
+flag值：
+...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-unzip-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-crash-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2022强网杯-crash-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2022-08-01</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        打开题目看到源码 是python Flask
+
+
+
+import base64
+# import sqlite3
+import pickle
+from flask import Flask, make_response,request, s...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-crash-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-babyweb-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2022强网杯babyweb-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2022-08-01</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        
+打开网站首页 只有登录注册功能 注册一个账户 发现admin账户存在 爆破弱口令无果
+
+
+随便注册一个账号 进去看功能 发现是个websocket bot
+
+
+测试下bugreport 功能存在ssrf
+
+于是自己创建一个页面
+
+执行
+
+...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-babyweb-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-rcefile-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2022强网杯rcefile-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2022-08-01</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        打开网站发现是考察php文件上传漏洞
+
+直接FUZZ一下后缀 发现phar可以上传并且执行php代码
+
+
+
+蚁剑连接
+
+查看flag
+
+2022年第六届强网杯
+...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-rcefile-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Web-2021祥云杯初赛-安全检测-writeup
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2022-02-13</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        打开网站 看见登录框 CTF比赛 看见登录就想是不是SQL注入 或者与SESSION有关
+测试后发现没有SQL注入 登录进去是一个检测网址 然后预览的工具 想到会不会有文件读取的漏洞
+直接网址填写http://127.0.0.1 发现可以读...
+      </div>
+      <a href="https://daffodi11.github.io/post/web-an-quan-jian-ce-writeup/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+  
+      </div>
+
+      
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  
+</footer>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://daffodi11.github.io/media/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>红队武器研发：尝试实现一个现代C2框架-DaffodilC2 - Daffodil</title>
+<link rel="shortcut icon" href="https://daffodi11.github.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/media/css/tailwind.css">
+<link rel="stylesheet" href="https://daffodi11.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="红队武器研发：尝试实现一个现代C2框架-DaffodilC2 - Daffodil - Atom Feed" href="https://daffodi11.github.io/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-220193003-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-220193003-2');
+  </script>
+    
+
+  <meta name="description" content="本系列将尝试开发一个现代化的C2框架
+由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。
+浅谈C2框架的发展历史
+  最早且广为人知的C2(command&amp;amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的..." />
+  <meta property="og:title" content="红队武器研发：尝试实现一个现代C2框架-DaffodilC2 - Daffodil">
+  <meta property="og:description" content="本系列将尝试开发一个现代化的C2框架
+由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。
+浅谈C2框架的发展历史
+  最早且广为人知的C2(command&amp;amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/" />
+  <meta property="og:image" content="https://daffodi11.github.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="红队武器研发：尝试实现一个现代C2框架-DaffodilC2 - Daffodil">
+  <meta name="twitter:description" content="本系列将尝试开发一个现代化的C2框架
+由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。
+浅谈C2框架的发展历史
+  最早且广为人知的C2(command&amp;amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://daffodi11.github.io/post/hong-dui-wu-qi-yan-fa-chang-shi-shi-xian-yi-ge-xian-dai-c2-kuang-jia-daffodilc2/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://daffodi11.github.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://daffodi11.github.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Daffodil
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          红队武器研发：尝试实现一个现代C2框架-DaffodilC2
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2022-02-14 · 3 min read</div>
+          
+            <a href="https://daffodi11.github.io/tag/pkDCRUBB8/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              红队武器开发
+            </a>
+          
+            <a href="https://daffodi11.github.io/tag/2VgSXZx_z/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              redteam
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <p>本系列将尝试开发一个现代化的C2框架<br>
+由于本人技术浅薄，开发经验基本为零，如有错误之处,敬请指正。</p>
+<h2 id="浅谈c2框架的发展历史">浅谈C2框架的发展历史</h2>
+<p>  最早且广为人知的C2(command&amp;control)框架可能是第一代的灰鸽子,采用客户端“主动连接”的方式,即客户端在主机A执行后，客户端监听，在服务端输入主机A的IP与端口后，才能进行通讯。<br>
+  后来因为内网环境与防火墙的因素，发展出了“被动连接”方式的第二代C2框架，例如GHOST、大灰狼，与“主动连接”相反，即服务端监听，客户端主动连接服务端。此时出现了两种配置方式，一是FTP上线、二是域名解析上线。有效适应大多数网络环境,但易溯源、网络数据包易被提取特征、不易于现代红队协同使用。<br>
+  为了解决这些问题，发展出了第三代C2框架例如cobalt strike,它支持HTTP、HTTPS、DNS等协议通讯,由TeamServer转发请求,隐秘性好、易于扩展、适合现代红队协同工作,如今被广泛使用。<br>
+  本系列将尝试开发一个第三代C2框架</p>
+<h2 id="设计-c2-基础架构">设计 C2 基础架构</h2>
+<p>  我们需要实现一个控制端发送命令，实现一个客户端执行命令，实现一个TeamServer服务，接收转发来自客户端与控制端的请求。</p>
+<h4 id="daffodilc2项目分为三个组件">DaffodilC2项目分为三个组件</h4>
+<ul>
+<li>DaffodilServer: <code>TeamServer服务</code> go实现</li>
+<li>ControlServer: <code>控制端发送命令</code> go实现</li>
+<li>client:<code> 客户端执行命令</code> cpp实现</li>
+</ul>
+<h2 id="实现teamserver服务">实现TeamServer服务</h2>
+<p>  由于之前没学过go，为了在实现C2的过程中顺便学习一下go语言，我决定用go实现一个http服务,将来自控制端与客户端的请求存储下来，客户端去读取、解析、执行，控制端读取并显示结果。</p>
+<h2 id="实现controlserver服务">实现ControlServer服务</h2>
+<p>  先实现一个上线功能，解析TeamServer转发的JSON。</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func GetInf(w http.ResponseWriter, r *http.Request) {
+
+	formData := make(map[string]interface{})
+	// 调用json包的解析，解析请求body
+	json.NewDecoder(r.Body).Decode(&amp;formData)
+	for key, value := range formData {
+		log.Println(&quot;上线啦！ key:&quot;, key, &quot; =&gt; value :&quot;, value)
+	}
+
+}
+
+func main() {
+	log.Println(&quot;控制端开始监听&quot;)
+	http.HandleFunc(&quot;/ControlServer&quot;, GetInf)
+	http.ListenAndServe(&quot;:8001&quot;, nil) //启动服务器并监听本地的 8001 端口。当有请求过来时，则根据路由执行对应的handler函数
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://daffodi11.github.io/post-images/1644849679380.jpg" alt="" loading="lazy"></figure>
+<p>未完待续。。。</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%B5%85%E8%B0%88c2%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2">浅谈C2框架的发展历史</a></li>
+<li><a href="#%E8%AE%BE%E8%AE%A1-c2-%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84">设计 C2 基础架构</a><br>
+*
+<ul>
+<li><a href="#daffodilc2%E9%A1%B9%E7%9B%AE%E5%88%86%E4%B8%BA%E4%B8%89%E4%B8%AA%E7%BB%84%E4%BB%B6">DaffodilC2项目分为三个组件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E7%8E%B0teamserver%E6%9C%8D%E5%8A%A1">实现TeamServer服务</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0controlserver%E6%9C%8D%E5%8A%A1">实现ControlServer服务</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://daffodi11.github.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://daffodi11.github.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script type="application/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script type="application/javascript">
+
+  var gitalk = new Gitalk({
+    clientID: '14567eb76fbd8517a142',
+    clientSecret: '0554531da4bcec4ecfed7c23af678bb541868c75',
+    repo: 'daffodi11.github.io',
+    owner: 'daffodi11',
+    admin: ['daffodi11'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+    
+  
+</body>
+
+</html>
